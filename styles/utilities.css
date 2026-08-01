@@ -1,0 +1,14 @@
+@utility container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding-inline: var(--container-gutter);
+}
+
+@utility section-spacing {
+  padding-block: var(--section-spacing);
+}
+
+@utility text-measure {
+  max-width: var(--content-measure);
+}

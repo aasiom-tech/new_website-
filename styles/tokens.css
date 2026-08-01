@@ -1,0 +1,118 @@
+:root {
+  --brand-sovereign-ink: #12385b;
+  --brand-saffron: #815400;
+  --brand-signal-steel: #bcc9ce;
+  --brand-operational-teal: #18b7a5;
+
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  --container-max-width: 80rem;
+  --container-gutter: var(--space-4);
+  --content-measure: 70ch;
+  --section-spacing: var(--space-16);
+
+  --focus-ring-width: 0.1875rem;
+  --focus-ring-offset: 0.1875rem;
+
+  --transition-duration-fast: 120ms;
+  --transition-duration-standard: 180ms;
+  --transition-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (width >= 48rem) {
+  :root {
+    --container-gutter: var(--space-6);
+    --section-spacing: var(--space-20);
+  }
+}
+
+@media (width >= 64rem) {
+  :root {
+    --container-gutter: var(--space-8);
+    --section-spacing: var(--space-24);
+  }
+}
+
+@theme inline {
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-background: #fafbf8;
+  --color-surface: #ffffff;
+  --color-surface-secondary: #f1f5f3;
+  --color-surface-dark: var(--brand-sovereign-ink);
+  --color-surface-dark-hover: #0d2d49;
+  --color-surface-primary-subtle: #e7f7f3;
+  --color-primary: var(--brand-operational-teal);
+  --color-primary-hover: #17b3a1;
+  --color-primary-foreground: var(--brand-sovereign-ink);
+  --color-border: var(--brand-signal-steel);
+  --color-border-muted: #dde5e5;
+  --color-border-on-dark: #6c889c;
+  --color-header-divider: #315675;
+  --color-footer-divider: #315675;
+  --color-text-primary: var(--brand-sovereign-ink);
+  --color-text-secondary: #3f5668;
+  --color-text-muted: #5b6f7d;
+  --color-text-inverse: #ffffff;
+  --color-text-on-dark: #fafbf8;
+  --color-text-on-dark-muted: #c8d6de;
+  --color-link: #0c776d;
+  --color-link-hover: #075d56;
+  --color-success: #146c43;
+  --color-success-surface: #eaf6ef;
+  --color-success-border: #9cceb2;
+  --color-warning: var(--brand-saffron);
+  --color-warning-surface: #fff5db;
+  --color-warning-border: #e9c765;
+  --color-error: #b42318;
+  --color-error-surface: #fdf0ef;
+  --color-error-border: #e8aaa5;
+  --color-info: var(--brand-sovereign-ink);
+  --color-info-surface: #edf3f7;
+  --color-info-border: #a9bfce;
+  --color-focus-ring: var(--brand-operational-teal);
+  --color-focus-ring-contrast: var(--brand-sovereign-ink);
+  --color-selection: #cdefe8;
+
+  --font-*: initial;
+  --font-sans: var(--font-inter);
+  --font-body: var(--font-inter);
+  --font-heading: var(--font-space-grotesk);
+
+  --spacing: var(--space-1);
+  --container-site: var(--container-max-width);
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 9999px;
+
+  --shadow-subtle: 0 1px 2px rgb(18 56 91 / 8%);
+  --shadow-raised: 0 8px 24px rgb(18 56 91 / 10%);
+  --shadow-overlay: 0 18px 48px rgb(18 56 91 / 16%);
+
+  --text-display: clamp(2.5rem, 2rem + 2.5vw, 4.5rem);
+  --text-h1: clamp(2.25rem, 1.9rem + 1.75vw, 3.75rem);
+  --text-h2: clamp(2rem, 1.75rem + 1.25vw, 3rem);
+  --text-h3: clamp(1.5rem, 1.375rem + 0.625vw, 2rem);
+  --text-h4: clamp(1.25rem, 1.1875rem + 0.3125vw, 1.5rem);
+  --text-body-large: clamp(1.125rem, 1.09375rem + 0.15625vw, 1.25rem);
+  --text-body: 1rem;
+  --text-body-small: 0.875rem;
+  --text-caption: 0.75rem;
+  --text-label: 0.75rem;
+  --text-button: 0.875rem;
+  --text-navigation: 0.9375rem;
+}
