@@ -1,12 +1,14 @@
-export type NavigationItem = {
-  label: string;
-  href: string;
-  includeChildren?: boolean;
+import { companyDetails } from "@/content/company";
+import { products } from "@/content/products";
+import type { LinkItem } from "@/types/content";
+
+export type NavigationItem = LinkItem & {
+  readonly includeChildren?: boolean;
 };
 
 export type NavigationGroup = {
-  title: string;
-  links: readonly NavigationItem[];
+  readonly title: string;
+  readonly links: readonly NavigationItem[];
 };
 
 export const primaryNavigation = [
@@ -20,7 +22,7 @@ export const primaryNavigation = [
 export const primaryContactAction = {
   label: "Start a Pilot Conversation",
   href: "/contact",
-} as const;
+} as const satisfies LinkItem;
 
 export const footerNavigation = [
   {
@@ -34,7 +36,10 @@ export const footerNavigation = [
     title: "Product",
     links: [
       { label: "Product", href: "/product" },
-      { label: "ANVIRA", href: "/product/anvira" },
+      ...products.map((product) => ({
+        label: product.name,
+        href: product.route,
+      })),
     ],
   },
   {
@@ -47,16 +52,7 @@ export const footerNavigation = [
   },
 ] as const satisfies readonly NavigationGroup[];
 
-export const companyDetails = {
-  name: "AASIOM Technologies Private Limited",
-  headquarters: "Dadar East, Mumbai, Maharashtra, India",
-  email: "pvsao@aasiom.com",
-  phoneDisplay: "+91 9209021711",
-  phoneHref: "+919209021711",
-  copyright: "\u00a9 2026 AASIOM Technologies Private Limited.",
-  rights: "All rights reserved.",
-  origin: "Built in India.",
-} as const;
+export { companyDetails };
 
 export function isNavigationItemActive(
   pathname: string,

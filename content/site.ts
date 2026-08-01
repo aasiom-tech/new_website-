@@ -1,6 +1,8 @@
+import { company } from "@/content/company";
+
 export const siteMetadata = {
-  name: "AASIOM Technologies",
-  description: "Official website of AASIOM Technologies Private Limited.",
+  name: company.brandName,
+  description: company.siteDescription,
 } as const;
 
 export const pageNames = {

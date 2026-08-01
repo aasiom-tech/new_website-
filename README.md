@@ -4,7 +4,7 @@ Official website for AASIOM Technologies Private Limited.
 
 ## Status
 
-In development — Stage 1 establishes the repository structure and project foundation only. Page design, final content, shared navigation, and production components will be implemented in later approved stages.
+In development — Stages 1 through 4A establish the project foundation, design system, global shell, approved brand palette, and complete typed content architecture. Page implementation and the reusable component library remain future approved stages.
 
 ## Stack
 
@@ -80,6 +80,10 @@ Routing and page layout live in `app/`. Website and product content are managed 
 ## Design system
 
 Brand primitive tokens define the named AASIOM identity palette. Semantic tokens define how those colors are used across interface backgrounds, surfaces, text, borders, actions, and statuses. Components should use semantic tokens; direct brand-primitive usage is reserved for justified brand-specific visuals.
+
+## Content architecture
+
+The approved architecture controls route hierarchy, section placement, and reusable structures; the approved content specification controls wording. Page components must import page copy from `content/`, shared company details must come from `content/company.ts`, and every new product must be registered in `content/products/index.ts`. Team content requires a separate approved source, the Contact “What happens next” block remains pending, and legal placeholders may only be replaced after legal review.
 
 ## Team
 
