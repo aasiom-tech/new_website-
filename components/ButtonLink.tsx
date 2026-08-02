@@ -5,6 +5,7 @@ type ButtonLinkProps = {
   children: ReactNode;
   href: string;
   variant?: "primary" | "secondary";
+  onClick?: () => void;
 };
 
 const baseStyles =
@@ -21,9 +22,14 @@ export function ButtonLink({
   children,
   href,
   variant = "primary",
+  onClick,
 }: ButtonLinkProps) {
   return (
-    <Link href={href} className={`${baseStyles} ${variantStyles[variant]}`}>
+    <Link
+      href={href}
+      className={`${baseStyles} ${variantStyles[variant]}`}
+      onClick={onClick}
+    >
       {children}
     </Link>
   );

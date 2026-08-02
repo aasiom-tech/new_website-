@@ -157,8 +157,10 @@ export const contactContent = {
   form: {
     fields: contactFormFields,
     inquiryCategories,
-    submitLabel: null,
+    submitLabel: "Check Required Fields",
     confirmationLabel: null,
+    statusNotice:
+      "Form submission is not yet enabled. Please contact AASIOM directly by email or phone.",
   },
   directContact: contactOptions,
   headquarters: company.headquarters,

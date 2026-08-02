@@ -41,7 +41,6 @@ export function ContactForm({
 
   return (
     <form
-      method="dialog"
       aria-label={formLabel}
       onSubmit={preventUnconnectedSubmission}
       className="grid min-w-0 gap-5 md:grid-cols-2 md:gap-6"

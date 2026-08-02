@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer className="border-t border-footer-divider bg-surface-dark">
       <div className="container py-10 lg:py-12">
-        <div className="grid grid-cols-2 gap-x-6 gap-y-8 md:gap-x-10 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 md:gap-x-10 lg:grid-cols-4">
           {footerNavigation.map((group) => (
             <section
               key={group.title}
@@ -45,7 +45,7 @@ export function Footer() {
             <address className="mt-3 grid not-italic">
               <a
                 href={`mailto:${companyDetails.email}`}
-                className="type-body-small inline-flex min-h-11 items-center break-all !text-text-on-dark-muted underline underline-offset-4 transition-colors duration-200 hover:!text-primary"
+                className="type-body-small inline-flex min-h-11 max-w-full items-center break-words !text-text-on-dark-muted underline underline-offset-4 transition-colors duration-200 hover:!text-primary"
               >
                 {companyDetails.email}
               </a>
@@ -64,9 +64,15 @@ export function Footer() {
         </div>
 
         <div className="mt-8 flex flex-col gap-2 border-t border-footer-divider pt-5 md:flex-row md:flex-wrap md:items-center md:gap-x-4">
-          <p className="type-caption !text-text-on-dark-muted">{companyDetails.copyright}</p>
-          <p className="type-caption !text-text-on-dark-muted">{companyDetails.rights}</p>
-          <p className="type-caption !text-text-on-dark-muted">{companyDetails.origin}</p>
+          <p className="type-caption !text-text-on-dark-muted">
+            {companyDetails.copyright}
+          </p>
+          <p className="type-caption !text-text-on-dark-muted">
+            {companyDetails.rights}
+          </p>
+          <p className="type-caption !text-text-on-dark-muted">
+            {companyDetails.origin}
+          </p>
         </div>
       </div>
     </footer>

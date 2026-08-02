@@ -85,7 +85,7 @@ export function MobileNavigation({ pathname }: MobileNavigationProps) {
       <button
         ref={menuButtonRef}
         type="button"
-        className="type-button min-h-11 rounded-md border border-border-on-dark bg-surface-dark px-4 !text-text-on-dark transition-colors duration-200 hover:border-primary hover:bg-surface-dark-hover"
+        className="type-button min-h-11 min-w-11 rounded-md border border-border-on-dark bg-surface-dark !px-4 !py-2.5 !text-text-on-dark transition-colors duration-200 hover:border-primary hover:bg-surface-dark-hover"
         aria-expanded={isOpen}
         aria-controls="mobile-site-navigation"
         onClick={() => setOpenPath(isOpen ? null : pathname)}
@@ -108,7 +108,7 @@ export function MobileNavigation({ pathname }: MobileNavigationProps) {
             <button
               ref={closeButtonRef}
               type="button"
-              className="type-button min-h-11 rounded-md border border-border-on-dark bg-surface-dark px-4 !text-text-on-dark transition-colors duration-200 hover:border-primary hover:bg-surface-dark-hover"
+              className="type-button min-h-11 min-w-11 rounded-md border border-border-on-dark bg-surface-dark !px-4 !py-2.5 !text-text-on-dark transition-colors duration-200 hover:border-primary hover:bg-surface-dark-hover"
               onClick={() => closeMenu()}
             >
               Close
@@ -141,7 +141,10 @@ export function MobileNavigation({ pathname }: MobileNavigationProps) {
           </nav>
 
           <div className="mt-auto border-t border-header-divider pt-6">
-            <ButtonLink href={primaryContactAction.href}>
+            <ButtonLink
+              href={primaryContactAction.href}
+              onClick={() => closeMenu(false)}
+            >
               {primaryContactAction.label}
             </ButtonLink>
           </div>
