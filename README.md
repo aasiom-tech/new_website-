@@ -2,6 +2,11 @@
 
 Official website for AASIOM Technologies Private Limited.
 
+## Live Website
+
+**Production**
+https://new-website-nine-delta.vercel.app
+
 ## Status
 
 In development — Stages 1 through 4A establish the project foundation, design system, global shell, approved brand palette, and complete typed content architecture. Page implementation and the reusable component library remain future approved stages.
