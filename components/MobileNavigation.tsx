@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -103,8 +104,20 @@ export function MobileNavigation({ pathname }: MobileNavigationProps) {
         hidden={!isOpen}
       >
         <div className="container flex min-h-dvh flex-col py-4">
-          <div className="flex min-h-11 items-center justify-between gap-4 border-b border-header-divider pb-4">
-            <span className="type-h4 !text-text-on-dark">AASIOM</span>
+          <div className="flex min-h-14 items-center justify-between gap-4 border-b border-header-divider pb-4">
+            <Link
+              href="/"
+              aria-label="AASIOM Technologies home"
+              onNavigate={() => closeMenu(false)}
+            >
+              <Image
+                src="/logos/aasiom-logo-light.png"
+                alt="AASIOM Technologies Pvt Ltd"
+                width={340}
+                height={164}
+                className="h-auto w-[9.5rem] object-contain"
+              />
+            </Link>
             <button
               ref={closeButtonRef}
               type="button"

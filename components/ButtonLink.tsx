@@ -9,7 +9,7 @@ type ButtonLinkProps = {
 };
 
 const baseStyles =
-  "type-button inline-flex min-h-11 items-center justify-center rounded-md px-4 py-2.5 text-center no-underline transition-colors duration-200";
+  "type-button inline-flex min-h-11 items-center justify-center rounded-md px-4 py-2.5 text-center no-underline transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-raised active:translate-y-0";
 
 const variantStyles = {
   primary:

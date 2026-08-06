@@ -5,7 +5,7 @@ const legalName = "AASIOM Technologies Private Limited";
 export const company = {
   brandName: "AASIOM Technologies",
   legalName,
-  operatingFocus: "Focused Digital Systems for Complex Real-World Operations",
+  operatingFocus: "AI-First Technology and Product Company",
   headquarters: "Dadar East, Mumbai, Maharashtra, India",
   registeredOffice:
     "27, Ground Floor, Sunshine Plaza,\nMumbai Marathi Granth Sangrahalaya Marg,\nDadar East, Mumbai - 400014,\nMaharashtra, India",
@@ -15,12 +15,13 @@ export const company = {
     href: "tel:+919209021711",
   },
   legalEntity: `${legalName} (Registered in India)`,
-  siteDescription: `Official website of ${legalName}.`,
+  siteDescription:
+    "AASIOM Technologies Private Limited designs intelligent systems and scalable digital products for complex real-world operations.",
   copyright: `© 2026 ${legalName}.`,
   rights: "All rights reserved.",
   origin: "Built in India.",
   pendingServicesStatement:
-    "AASIOM is evaluating selected technology project domains for future client work. Final service areas will be announced following internal capability review.",
+    "AASIOM presents selected capability areas that reflect its research, product, and engineering direction. Commercial engagements remain subject to scope and internal approval.",
   director: {
     name: "Om Vinayak Muchandikar",
     role: "Director",

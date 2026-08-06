@@ -1,5 +1,5 @@
 import { companyDetails } from "@/content/company";
-import { products } from "@/content/products";
+import { anviraProduct, products } from "@/content/products";
 import type { LinkItem } from "@/types/content";
 
 export type NavigationItem = LinkItem & {
@@ -14,13 +14,18 @@ export type NavigationGroup = {
 export const primaryNavigation = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Product", href: "/product", includeChildren: true },
+  { label: "Capabilities", href: "/#capabilities" },
+  {
+    label: "ANVIRA",
+    href: anviraProduct.route,
+    includeChildren: true,
+  },
   { label: "Strategic Review", href: "/strategic-review" },
   { label: "Contact", href: "/contact" },
 ] as const satisfies readonly NavigationItem[];
 
 export const primaryContactAction = {
-  label: "Start a Pilot Conversation",
+  label: "Discuss a Project",
   href: "/contact",
 } as const satisfies LinkItem;
 
@@ -29,12 +34,14 @@ export const footerNavigation = [
     title: "Company",
     links: [
       { label: "About", href: "/about" },
+      { label: "Strategic Review", href: "/strategic-review" },
       { label: "Contact", href: "/contact" },
     ],
   },
   {
-    title: "Product",
+    title: "Capabilities",
     links: [
+      { label: "Capability Areas", href: "/#capabilities" },
       { label: "Product", href: "/product" },
       ...products.map((product) => ({
         label: product.name,
@@ -43,9 +50,8 @@ export const footerNavigation = [
     ],
   },
   {
-    title: "Resources",
+    title: "Legal",
     links: [
-      { label: "Strategic Review", href: "/strategic-review" },
       { label: "Privacy Policy", href: "/privacy-policy" },
       { label: "Terms of Use", href: "/terms-of-use" },
     ],
@@ -60,6 +66,10 @@ export function isNavigationItemActive(
 ) {
   if (item.href === "/") {
     return pathname === "/";
+  }
+
+  if (item.href.includes("#")) {
+    return false;
   }
 
   return item.includeChildren

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { companyDetails, footerNavigation } from "@/content/navigation";
@@ -12,17 +13,34 @@ export function Footer() {
               key={group.title}
               aria-labelledby={`footer-${group.title.toLowerCase()}`}
             >
-              <h2
-                id={`footer-${group.title.toLowerCase()}`}
-                className="type-label !text-text-on-dark"
-              >
-                {group.title}
-              </h2>
               {group.title === "Company" ? (
-                <p className="type-body-small mt-3 !text-text-on-dark-muted">
-                  {companyDetails.name}
-                </p>
-              ) : null}
+                <>
+                  <h2
+                    id={`footer-${group.title.toLowerCase()}`}
+                    className="sr-only"
+                  >
+                    Company
+                  </h2>
+                  <Image
+                    src="/logos/aasiom-logo-light.png"
+                    alt="AASIOM Technologies Pvt Ltd"
+                    width={360}
+                    height={174}
+                    className="h-auto w-[10rem] object-contain"
+                  />
+                  <p className="type-body-small mt-4 !text-text-on-dark-muted">
+                    {companyDetails.operatingFocus}
+                  </p>
+                </>
+              ) : (
+                <h2
+                  id={`footer-${group.title.toLowerCase()}`}
+                  className="type-label !text-text-on-dark"
+                >
+                  {group.title}
+                </h2>
+              )}
+
               <ul className="mt-3 grid list-none gap-1 p-0">
                 {group.links.map((link) => (
                   <li key={link.href} className="m-0">

@@ -20,7 +20,7 @@
   --container-max-width: 80rem;
   --container-gutter: var(--space-4);
   --content-measure: 70ch;
-  --section-spacing: var(--space-16);
+  --section-spacing: 4rem;
 
   --focus-ring-width: 0.1875rem;
   --focus-ring-offset: 0.1875rem;
@@ -33,14 +33,14 @@
 @media (width >= 48rem) {
   :root {
     --container-gutter: var(--space-6);
-    --section-spacing: var(--space-20);
+    --section-spacing: 4.5rem;
   }
 }
 
 @media (width >= 64rem) {
   :root {
     --container-gutter: var(--space-8);
-    --section-spacing: var(--space-24);
+    --section-spacing: 5rem;
   }
 }
 
@@ -56,7 +56,7 @@
   --color-surface-primary-subtle: #e7f7f3;
   --color-primary: var(--brand-operational-teal);
   --color-primary-hover: #17b3a1;
-  --color-primary-foreground: var(--brand-sovereign-ink);
+  --color-primary-foreground: #ffffff;
   --color-border: var(--brand-signal-steel);
   --color-border-muted: #dde5e5;
   --color-border-on-dark: #6c889c;
@@ -89,7 +89,7 @@
   --font-*: initial;
   --font-sans: var(--font-inter);
   --font-body: var(--font-inter);
-  --font-heading: var(--font-space-grotesk);
+  --font-heading: var(--font-inter);
 
   --spacing: var(--space-1);
   --container-site: var(--container-max-width);

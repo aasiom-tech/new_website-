@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import {
@@ -14,21 +16,49 @@ import { MobileNavigation } from "./MobileNavigation";
 
 export function Header() {
   const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const updateHeader = () => setIsScrolled(window.scrollY > 18);
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+
+    return () => window.removeEventListener("scroll", updateHeader);
+  }, []);
 
   return (
-    <header className="border-b border-header-divider bg-surface-dark">
-      <div className="container flex min-h-18 items-center justify-between gap-4">
+    <header
+      className={`sticky top-0 z-40 border-b border-header-divider bg-surface-dark transition-shadow duration-300 ${
+        isScrolled ? "shadow-raised" : ""
+      }`}
+    >
+      <div
+        className={`container flex items-center justify-between gap-4 transition-[min-height] duration-300 ${
+          isScrolled ? "min-h-16" : "min-h-18"
+        }`}
+      >
         <Link
           href="/"
-          className="type-h4 shrink-0 !text-text-on-dark no-underline transition-colors duration-200 hover:!text-primary"
-          aria-label="AASIOM home"
+          className="shrink-0 no-underline"
+          aria-label="AASIOM Technologies home"
         >
-          AASIOM
+          <Image
+            src="/logos/aasiom-logo-light.png"
+            alt="AASIOM Technologies Pvt Ltd"
+            width={396}
+            height={190}
+            priority
+            className={`h-auto object-contain transition-[width] duration-300 ${
+              isScrolled
+                ? "w-[8.8rem] sm:w-[9.8rem]"
+                : "w-[9.6rem] sm:w-[11rem]"
+            }`}
+          />
         </Link>
 
-        <div className="hidden min-w-0 flex-1 items-center justify-end gap-4 lg:flex">
+        <div className="hidden min-w-0 flex-1 items-center justify-end gap-5 lg:flex">
           <nav aria-label="Primary navigation">
-            <ul className="flex list-none items-center gap-2 p-0 xl:gap-3">
+            <ul className="flex list-none items-center gap-1 p-0 xl:gap-2">
               {primaryNavigation.map((item) => {
                 const isActive = isNavigationItemActive(pathname, item);
 
@@ -37,7 +67,7 @@ export function Header() {
                     <Link
                       href={item.href}
                       aria-current={isActive ? "page" : undefined}
-                      className={`type-navigation flex min-h-11 items-center border-b-2 px-2 no-underline transition-colors duration-200 ${
+                      className={`type-navigation flex min-h-11 items-center border-b-2 px-3 no-underline transition-all duration-200 ${
                         isActive
                           ? "border-primary font-semibold !text-primary"
                           : "border-transparent !text-text-on-dark-muted hover:border-primary hover:!text-text-on-dark"

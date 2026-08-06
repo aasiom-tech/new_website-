@@ -14,7 +14,7 @@ export function WorkflowStepper({
   headingLevel: Heading = "h3",
 }: WorkflowStepperProps) {
   return (
-    <ol className="grid list-none gap-px overflow-hidden rounded-lg border border-border bg-border !p-0 md:grid-cols-2 md:[&>li:last-child:nth-child(odd)]:col-span-2 lg:grid-cols-3 xl:flex xl:[&>li:last-child]:col-span-1">
+    <ol className="reveal-up grid list-none gap-px overflow-hidden rounded-lg border border-border bg-border !p-0 md:grid-cols-2 md:[&>li:last-child:nth-child(odd)]:col-span-2 lg:grid-cols-3 xl:flex xl:[&>li:last-child]:col-span-1">
       {steps.map((step) => {
         const displayNumber =
           typeof step.number === "number"
@@ -24,7 +24,7 @@ export function WorkflowStepper({
         return (
           <li
             key={`${step.number}-${step.title}`}
-            className="!mt-0 min-w-0 bg-surface p-5 xl:flex-1 xl:p-6"
+            className="!mt-0 min-w-0 bg-surface p-5 transition-all duration-300 hover:bg-surface-primary-subtle xl:flex-1 xl:p-6"
           >
             <p className="type-label break-words text-link">{displayNumber}</p>
             <Heading className="type-h4 mt-3 break-words">{step.title}</Heading>

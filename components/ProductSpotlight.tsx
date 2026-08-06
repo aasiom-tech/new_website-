@@ -28,7 +28,7 @@ export function ProductSpotlight({
   headingId,
 }: ProductSpotlightProps) {
   return (
-    <article className="overflow-hidden rounded-lg border border-border-on-dark bg-surface-dark shadow-raised">
+    <article className="reveal-up overflow-hidden rounded-lg border border-border-on-dark bg-surface-dark shadow-raised transition-transform duration-300 hover:-translate-y-1">
       <div className="grid min-w-0 gap-8 p-6 md:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(16rem,0.48fr)] lg:items-end lg:gap-12 lg:p-10">
         <div className="min-w-0">
           <div className="flex flex-wrap gap-2">
