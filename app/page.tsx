@@ -31,8 +31,8 @@ export default function HomePage() {
   aria-labelledby="home-hero-title"
   className="hero-section overflow-hidden"
 >
-  <div className="container grid gap-8 py-10 md:py-12 lg:grid-cols-[minmax(0,0.96fr)_minmax(0,1.04fr)] lg:items-center lg:gap-10 lg:py-14">
-    <div className="min-w-0 reveal-up">
+  <div className="container grid gap-7 py-8 md:py-9 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center lg:gap-8 lg:py-10">
+    <div className="relative z-10 min-w-0 reveal-up">
       <SectionLabel>{homeContent.hero.eyebrow}</SectionLabel>
       <h1
         id="home-hero-title"
@@ -64,7 +64,7 @@ export default function HomePage() {
       </div>
     </div>
 
-    <div className="hero-visual reveal-zoom relative min-h-[18rem] sm:min-h-[24rem] lg:min-h-[30rem]">
+    <div className="hero-visual reveal-zoom relative min-h-[19rem] sm:min-h-[25rem] lg:min-h-[30rem]">
       <div className="hero-orbit" aria-hidden="true" />
       <Image
         src="/images/aasiom-hero-collage.jpg"
@@ -72,34 +72,47 @@ export default function HomePage() {
         width={1600}
         height={900}
         priority
-        className="absolute inset-0 h-full w-full object-contain mix-blend-multiply"
+        className="hero-visual-image absolute inset-0 h-full w-full object-contain mix-blend-multiply"
       />
     </div>
   </div>
 </section>
 
-      <section
-        aria-labelledby="proof-strip-title"
-        className="border-y border-border-on-dark bg-surface-dark"
-      >
-        <div className="container py-6 lg:py-7">
-          <h2 id="proof-strip-title" className="sr-only">
-            {homeContent.proofStrip.heading}
-          </h2>
-          <div className="reveal-stagger grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {homeContent.proofStrip.items.map((item) => (
-              <div key={item.title} className="reveal-up">
-                <p className="type-body-small font-semibold !text-text-on-dark">
-                  {item.title}
-                </p>
-                <p className="type-caption mt-2 !text-text-on-dark">
-                  {item.description}
-                </p>
-              </div>
-            ))}
-          </div>
+
+<section
+  aria-labelledby="proof-strip-title"
+  className="proof-marquee border-y border-border-on-dark bg-surface-dark"
+>
+  <h2 id="proof-strip-title" className="sr-only">
+    {homeContent.proofStrip.heading}
+  </h2>
+
+  <div className="proof-marquee-viewport proof-marquee-compact">
+    <div className="proof-marquee-track">
+      {[0, 1].map((copyIndex) => (
+        <div
+          key={copyIndex}
+          className="proof-marquee-group"
+          aria-hidden={copyIndex === 1}
+        >
+          {homeContent.proofStrip.items.map((item) => (
+            <article
+              key={`${copyIndex}-${item.title}`}
+              className="proof-marquee-item"
+            >
+              <p className="type-body-small font-semibold !text-text-on-dark">
+                {item.title}
+              </p>
+              <p className="type-caption mt-2 !text-text-on-dark-muted">
+                {item.description}
+              </p>
+            </article>
+          ))}
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       <section
         aria-labelledby="company-introduction-title"

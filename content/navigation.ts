@@ -21,7 +21,7 @@ export const primaryNavigation = [
   { label: "Capabilities", href: "/#capabilities" },
   {
     label: "ANVIRA",
-    href: anviraProduct.route,
+    href: "/product/anvira",
     includeChildren: true,
   },
   { label: "Strategic Review", href: "/strategic-review" },
