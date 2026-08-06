@@ -4,13 +4,13 @@ import React from "react";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
 
-// Explicit TypeScript typing for Framer Motion variants
+// Framer Motion variants with explicit const assertions for easing
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 16 },
   visible: { 
     opacity: 1, 
     y: 0, 
-    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } 
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const } 
   },
 };
 
@@ -377,7 +377,7 @@ export default function AboutPage() {
               Ready to solve complex operational challenges?
             </h2>
             
-            <p className="mb-9 max-w-md text-xs sm:text-base text-slate-600 leading-loose text-center text-pretty">
+            <p className="mb-9 max-w-md text-xs sm:text-base text-slate-600 leading-loose text-center">
               Whether you need to streamline high-pressure operational workflows or evaluate custom system architectures, our team is ready to collaborate.
             </p>
 
