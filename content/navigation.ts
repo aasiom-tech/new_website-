@@ -20,8 +20,8 @@ export const primaryNavigation = [
   { label: "About", href: "/about" },
   { label: "Capabilities", href: "/#capabilities" },
   {
-    label: "ANVIRA",
-    href: "/product/anvira",
+    label: "Product",
+    href: "/product",
     includeChildren: true,
   },
   { label: "Strategic Review", href: "/strategic-review" },
