@@ -1,8 +1,12 @@
 import { companyDetails } from "@/content/company";
 import { anviraProduct, products } from "@/content/products";
-import type { LinkItem } from "@/types/content";
+import type { LinkItem, SiteRoute } from "@/types/content";
 
-export type NavigationItem = LinkItem & {
+type NavigationHref = SiteRoute | `/#${string}`;
+
+export type NavigationItem = {
+  readonly label: string;
+  readonly href: NavigationHref;
   readonly includeChildren?: boolean;
 };
 
