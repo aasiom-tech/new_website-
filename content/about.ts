@@ -1,78 +1,87 @@
 import { company } from "@/content/company";
-import { teamContent } from "@/content/team";
-import type {
-  ContentItem,
-  CorporateFact,
-  DirectorMessage,
-} from "@/types/content";
+import { leadershipMembers, researchTeamMembers } from "@/content/team";
+import type { CorporateFact } from "@/types/content";
 
-const operatingPrinciples = [
+export const aboutStoryPanels = [
   {
-    title: "Problem-First Innovation",
+    id: "company",
+    number: "01",
+    label: "Who We Are",
+    eyebrow: "WHO WE ARE",
+    title: "A technology partner for practical digital work.",
     description:
-      "The company begins with operational reality, not fashionable technology.",
+      "AASIOM Technologies Private Limited is a Mumbai-based technology and product engineering company. We work with businesses, founders and teams to design and build websites, web applications, dashboards, automation, AI-enabled tools and custom software.",
+    image: "/images/about/about-client-services.jpg",
+    imageAlt: "Technology services collaboration for software, web and automation projects",
+    highlights: ["Client focused", "End to end", "Quality first", "Measurable value"],
   },
   {
-    title: "Human-Controlled AI",
+    id: "mission",
+    number: "02",
+    label: "Our Mission",
+    eyebrow: "OUR MISSION",
+    title: "Turn business requirements into clear, usable digital systems.",
     description:
-      "AI assists analysis and organization while important decisions remain reviewable by people.",
+      "Our mission is to help clients move from an idea, manual process or existing system to a focused digital solution through structured discovery, design, engineering, automation, deployment and support.",
+    image: "/images/about/about-ai-automation.jpg",
+    imageAlt: "AI, automation and digital solution capabilities",
+    highlights: ["Understand", "Design", "Build", "Support"],
   },
   {
-    title: "Structured Product Development",
+    id: "vision",
+    number: "03",
+    label: "Our Vision",
+    eyebrow: "OUR VISION",
+    title: "Build a trusted services practice with deeper product capability.",
     description:
-      "Requirements, workflows, architecture, testing, and approvals are treated as core work.",
+      "AASIOM aims to become a dependable technology partner for cross-industry digital work while continuing to strengthen the research, architecture and engineering discipline required to create selected proprietary products.",
+    image: "/images/about/about-product-engineering.jpg",
+    imageAlt: "Product engineering and software delivery workflow",
+    highlights: ["Services", "Engineering", "Research", "Products"],
   },
   {
-    title: "Domain Depth",
+    id: "principles",
+    number: "04",
+    label: "Our Principles",
+    eyebrow: "OUR PRINCIPLES",
+    title: "Clear scope. Practical engineering. Responsible delivery.",
     description:
-      "The company aims to deeply understand the environment in which a product will be used.",
+      "We begin with the problem and intended outcome, keep decisions visible, choose technology for a reason, and treat usability, security, testing and maintainability as part of the build from the start.",
+    image: "/images/about/about-principles.jpg",
+    imageAlt: "Security and accountable system design concept",
+    highlights: ["Problem first", "Human aware", "Maintainable", "Accountable"],
   },
   {
-    title: "Accountable Systems",
+    id: "direction",
+    number: "05",
+    label: "Our Direction",
+    eyebrow: "OUR DIRECTION",
+    title: "Useful to clients today. Building deeper product ambition for tomorrow.",
     description:
-      "Actions, evidence, approvals, and changes should be traceable.",
+      "Client technology services are the immediate commercial focus. Alongside delivery work, AASIOM selectively develops proprietary initiatives such as ANVIRA to deepen its product, research and engineering capability.",
+    image: "/images/about/about-client-services.jpg",
+    imageAlt: "AASIOM client services and product engineering direction",
+    highlights: ["Client services", "Product R&D", "Long-term capability", "Mumbai"],
   },
-  {
-    title: "Selective Ambition",
-    description:
-      "AASIOM pursues focused, meaningful opportunities rather than presenting itself as doing everything.",
-  },
-] as const satisfies readonly ContentItem[];
-
-const directorMessage = {
-  quote:
-    "AASIOM's work is focused on understanding where operational coordination breaks down inside complex transport and real-world workflows. We are not starting with a large platform promise. We are starting with one workflow, one industry, and one measurable problem. The goal is simple: help organizations convert scattered information into one clear, usable operating picture.",
-  attribution: company.director,
-} as const satisfies DirectorMessage;
+] as const;
 
 const corporateFacts = [
-  {
-    label: "Incorporation Status",
-    value: "Registered Private Limited Company",
-  },
+  { label: "Company", value: "Registered Private Limited Company" },
   { label: "Headquarters", value: company.headquarters },
-  { label: "Focus Sector", value: "Transport & Logistics Operations" },
-  {
-    label: "Long-Term Ambition",
-    value:
-      "To become a respected product-building company known for solving difficult operational problems through thoughtful software, proprietary product initiatives, strategic technology partnerships, and a disciplined engineering organization.",
-  },
+  { label: "Service Focus", value: "Cross-industry digital solutions" },
+  { label: "Product / Domain Experience", value: "Transport & Logistics" },
+  { label: "Business Model", value: "Client Services + Selected Proprietary Products" },
 ] as const satisfies readonly CorporateFact[];
 
 export const aboutContent = {
   route: "/about",
-  availability: "partial",
-  title: "About",
+  availability: "approved",
+  title: "About AASIOM",
   primaryLine:
-    `${company.legalName} builds focused, human-controlled technology products for complex operational environments.`,
-  vision:
-    "To build trusted digital systems that help organizations operate with greater clarity, speed, coordination, and human control.",
-  mission:
-    "To identify important operational problems, understand them deeply, and build focused software products that organize information, guide action, and create accountable outcomes.",
+    "AASIOM is a technology and product engineering company delivering client solutions while building selected proprietary products.",
   expandedDescription:
-    "We are an emerging technology and product company focused on transforming fragmented, high-pressure, and information-heavy operations into clear digital workflows. We combine domain research, software engineering, responsible AI, and human judgment to build systems that improve visibility, coordination, and accountability.",
-  operatingPrinciples,
-  directorMessage,
+    "We work with businesses, founders and teams to design and build websites, web applications, dashboards, workflow automation, AI-enabled tools and custom software. Alongside client delivery, AASIOM also develops selected proprietary product initiatives such as ANVIRA.",
   corporateFacts,
-  team: teamContent,
+  leadership: leadershipMembers,
+  researchTeam: researchTeamMembers,
 } as const;
