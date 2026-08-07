@@ -9,7 +9,7 @@ import { company } from "@/content/company";
 export const metadata: Metadata = {
   title: `Products | ${company.brandName}`,
   description:
-    "Explore AASIOM's product approach and ANVIRA, its flagship AI-assisted operational product initiative for structured incident workflows.",
+    "Explore AASIOM's product portfolio, product-building philosophy, and ANVIRA, its current flagship AI-assisted operational product initiative.",
 };
 
 const productPrinciples = [
@@ -35,12 +35,11 @@ const productPrinciples = [
   },
 ] as const;
 
-const lifecycle = [
-  { number: "01", title: "Receive", description: "Bring operational updates into one structured flow." },
-  { number: "02", title: "Verify", description: "Organise evidence and support human confirmation." },
-  { number: "03", title: "Act", description: "Make actions, decisions, and ownership clearer." },
-  { number: "04", title: "Track", description: "Keep status, blockers, and follow-through visible." },
-  { number: "05", title: "Close", description: "Support controlled documentation and a clearer record." },
+const anviraTraits = [
+  "WhatsApp-first",
+  "AI-assisted",
+  "Human-confirmed",
+  "Evidence-aware",
 ] as const;
 
 export default function ProductPage() {
@@ -49,18 +48,19 @@ export default function ProductPage() {
       <section className="product-page-hero" aria-labelledby="product-page-title">
         <div className="container product-page-hero__grid">
           <div className="product-page-hero__copy">
-            <SectionLabel>Products by AASIOM</SectionLabel>
+            <SectionLabel>AASIOM Products</SectionLabel>
             <h1 id="product-page-title">
-              Built for real operations. Designed for intelligent execution.
+              Focused products for complex operational problems.
             </h1>
             <p>
-              AASIOM develops focused digital products for organisations operating
-              in complex, fast-moving environments. Structured workflows,
-              thoughtful engineering, and AI assistance help turn fragmented work
-              into clearer execution.
+              AASIOM creates proprietary digital products for environments where
+              information is fragmented, decisions are delayed, and accountability
+              is difficult to maintain. Each product is shaped around a defined
+              operational problem, structured workflows, responsible AI assistance,
+              and long-term product thinking.
             </p>
             <div className="product-page-hero__actions">
-              <ButtonLink href="/product/anvira">Explore ANVIRA</ButtonLink>
+              <ButtonLink href="#current-product">View Current Product</ButtonLink>
               <ButtonLink href="/contact" variant="secondary">
                 Discuss a Product Opportunity
               </ButtonLink>
@@ -72,17 +72,17 @@ export default function ProductPage() {
             <div className="product-page-hero__visual-card">
               <Image
                 src="/images/product/product-hero-anvira.jpg"
-                alt="ANVIRA concept preview across desktop, tablet, and mobile interfaces"
+                alt="AASIOM flagship product concept shown across desktop, tablet, and mobile interfaces"
                 width={1600}
-                height={689}
+                height={900}
                 priority
                 className="product-page-hero__visual-image"
               />
-              <span className="product-concept-badge">Concept preview</span>
+              <span className="product-concept-badge">Flagship product preview</span>
             </div>
             <div className="product-page-hero__visual-copy">
-              <span>Product thinking</span>
-              <strong>Operation → Structure → Intelligence → Action</strong>
+              <span>AASIOM product discipline</span>
+              <strong>Problem → Structure → Intelligence → Execution</strong>
             </div>
           </div>
         </div>
@@ -90,7 +90,10 @@ export default function ProductPage() {
 
       <ProductScrollShowcase />
 
-      <section className="product-philosophy product-frame-section" aria-labelledby="product-philosophy-title">
+      <section
+        className="product-philosophy product-frame-section"
+        aria-labelledby="product-philosophy-title"
+      >
         <div className="container product-frame-section__inner">
           <div className="product-section-heading">
             <SectionLabel>Product philosophy</SectionLabel>
@@ -116,14 +119,18 @@ export default function ProductPage() {
         </div>
       </section>
 
-      <section className="product-anvira product-frame-section" aria-labelledby="product-anvira-title">
+      <section
+        id="current-product"
+        className="product-anvira product-frame-section scroll-mt-24"
+        aria-labelledby="current-product-title"
+      >
         <div className="container product-anvira__grid">
           <div className="product-anvira__media">
             <div className="product-anvira__media-glow" aria-hidden="true" />
             <div className="product-anvira__image-frame">
               <Image
                 src="/images/product/anvira-dashboard-preview.jpg"
-                alt="ANVIRA concept preview showing an incident dashboard, evidence, workflow, and mobile interaction"
+                alt="ANVIRA concept preview showing structured incident information, evidence, workflow, and mobile interaction"
                 width={1600}
                 height={851}
                 className="product-anvira__image"
@@ -133,49 +140,67 @@ export default function ProductPage() {
           </div>
 
           <div className="product-anvira__copy">
-            <SectionLabel>Flagship product initiative</SectionLabel>
+            <SectionLabel>Current product portfolio</SectionLabel>
             <div className="product-status-row">
               <span className="product-status-dot" aria-hidden="true" />
-              <span>In active development</span>
+              <span>Flagship product · In active development</span>
             </div>
-            <h2 id="product-anvira-title">
-              ANVIRA turns fragmented incident updates into a structured operating picture.
-            </h2>
+            <h2 id="current-product-title">ANVIRA</h2>
             <p>
-              ANVIRA is a WhatsApp-first, AI-assisted incident command and
-              documentation platform being developed for Indian trucking fleets.
-              It brings scattered updates, evidence, actions, blockers, and
-              downtime context into one structured case.
+              ANVIRA is AASIOM&apos;s flagship product initiative: a WhatsApp-first,
+              AI-assisted incident command and documentation platform being
+              developed for Indian trucking fleets.
             </p>
+            <p>
+              It is designed to turn scattered incident updates—calls, chats,
+              photos, voice notes, documents, and location context—into a more
+              structured case with clearer evidence, ownership, actions, blockers,
+              and operational visibility.
+            </p>
+
+            <div className="mt-5 flex flex-wrap gap-2" aria-label="ANVIRA product traits">
+              {anviraTraits.map((trait) => (
+                <span
+                  key={trait}
+                  className="rounded-full border border-[rgb(24_183_165_/_24%)] bg-[rgb(24_183_165_/_8%)] px-3 py-1.5 text-sm font-semibold text-[#0b6f67]"
+                >
+                  {trait}
+                </span>
+              ))}
+            </div>
+
             <p className="product-anvira__ai-note">
-              AI can extract, summarise, classify, identify gaps, and propose
-              actions. People confirm sensitive operational values and final
-              outputs.
+              AI can assist with extraction, summarisation, classification, gap
+              identification, and proposed actions. People remain responsible for
+              confirming sensitive operational values and final outputs.
             </p>
-            <ButtonLink href="/product/anvira">Explore ANVIRA</ButtonLink>
+            <ButtonLink href="/contact">Discuss ANVIRA</ButtonLink>
           </div>
         </div>
       </section>
 
-      <section className="product-lifecycle product-frame-section" aria-labelledby="product-lifecycle-title">
-        <div className="container product-frame-section__inner">
-          <div className="product-section-heading product-section-heading--center">
-            <SectionLabel>ANVIRA lifecycle</SectionLabel>
-            <h2 id="product-lifecycle-title">Receive. Verify. Act. Track. Close.</h2>
-            <p>
-              One structured progression from first incident input to controlled
-              documentation.
-            </p>
+      <section
+        aria-labelledby="portfolio-direction-title"
+        className="border-t border-border-muted bg-white"
+      >
+        <div className="container grid gap-8 py-12 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] lg:gap-16 lg:py-16">
+          <div>
+            <SectionLabel>Portfolio direction</SectionLabel>
+            <h2 id="portfolio-direction-title" className="mt-4 max-w-xl">
+              One flagship today. A portfolio designed to grow deliberately.
+            </h2>
           </div>
-
-          <div className="product-lifecycle-grid">
-            {lifecycle.map((step) => (
-              <article className="product-lifecycle-card" key={step.title}>
-                <span>{step.number}</span>
-                <h3>{step.title}</h3>
-                <p>{step.description}</p>
-              </article>
-            ))}
+          <div className="max-w-3xl">
+            <p className="type-body-large">
+              ANVIRA is the current flagship product presented publicly by AASIOM.
+              Additional product initiatives will be added to this portfolio only
+              after they are formally approved and have enough verified product
+              definition to present responsibly.
+            </p>
+            <p className="type-body-small mt-4">
+              This keeps the product portfolio focused on real, defined initiatives
+              rather than placeholder concepts or empty future-product cards.
+            </p>
           </div>
         </div>
       </section>
@@ -183,19 +208,19 @@ export default function ProductPage() {
       <section className="product-closing-cta" aria-labelledby="product-contact-title">
         <div className="container product-closing-cta__grid">
           <div>
-            <p className="product-showcase-eyebrow">START A CONVERSATION</p>
+            <p className="product-showcase-eyebrow">BUILD WITH AASIOM</p>
             <h2 id="product-contact-title">
-              Have an operational problem that deserves a more focused product?
+              Have an operational problem that deserves a focused product?
             </h2>
             <p>
-              Discuss a product opportunity, ANVIRA, or a structured operational
-              challenge with AASIOM.
+              Discuss a product opportunity, technology partnership, or structured
+              operational challenge with AASIOM.
             </p>
           </div>
           <div className="product-closing-cta__actions">
-            <ButtonLink href="/contact">Discuss a Project</ButtonLink>
-            <ButtonLink href="/product/anvira" variant="secondary">
-              Explore ANVIRA
+            <ButtonLink href="/contact">Discuss a Product Opportunity</ButtonLink>
+            <ButtonLink href="/strategic-review" variant="secondary">
+              Strategic Review
             </ButtonLink>
           </div>
         </div>

@@ -33,22 +33,22 @@ const operationalRealityItems = [
   {
     title: "Fragmented information",
     description:
-      "Important context is often spread across calls, chats, documents, voice notes, images, and individual memory.",
+      "Critical context is often scattered across calls, chats, documents, voice notes, images, and individual memory—making a complete operating picture harder to form.",
   },
   {
     title: "Delayed decisions",
     description:
-      "When information is incomplete or difficult to verify, teams lose time deciding what happened and what should happen next.",
+      "When information is incomplete or difficult to verify, teams spend time reconstructing events before they can decide what should happen next.",
   },
   {
     title: "Unclear ownership",
     description:
-      "Actions, approvals, blockers, and follow-ups become difficult to track when work remains inside disconnected channels.",
+      "Actions, approvals, blockers, and follow-ups become harder to track when responsibility lives across disconnected channels.",
   },
   {
     title: "Generic software mismatch",
     description:
-      "Off-the-shelf tools may digitise isolated tasks without reflecting the operation, users, constraints, or decision flow.",
+      "Off-the-shelf tools can digitise isolated tasks without reflecting the operation, users, constraints, or decision flow they are meant to support.",
   },
 ] as const satisfies readonly ContentItem[];
 
@@ -147,34 +147,16 @@ const trustItems = [
   },
 ] as const satisfies readonly ContentItem[];
 
-const ecosystemItems = [
-  {
-    title: "AI and automation",
-    description:
-      "Assistive intelligence for extraction, classification, summarisation, gap identification, and workflow support.",
-  },
-  {
-    title: "Structured data and dashboards",
-    description:
-      "Clear records and interfaces that make evidence, ownership, status, and next actions easier to understand.",
-  },
-  {
-    title: "Cloud-ready product engineering",
-    description:
-      "Modern application architecture prepared for secure deployment, responsive access, and future service integration.",
-  },
-  {
-    title: "Human-centred interfaces",
-    description:
-      "Experiences designed for real users, real constraints, and understandable decision-making rather than technical novelty.",
-  },
-] as const satisfies readonly ContentItem[];
-
 const frequentlyAskedQuestions = [
+  {
+    question: "What kind of problems does AASIOM work on?",
+    answer:
+      "AASIOM focuses on operational problems where information is fragmented, decisions are difficult to coordinate, workflows are unclear, or existing software does not fit the way work actually happens.",
+  },
   {
     question: "What does AASIOM build?",
     answer:
-      "AASIOM designs intelligent systems and scalable digital products for operational problems where information is fragmented, decisions are delayed, and accountability is difficult to maintain.",
+      "AASIOM designs intelligent systems and scalable digital products, including AI-enabled platforms, enterprise software and dashboards, workflow automation, and web or application products shaped around specific operating needs.",
   },
   {
     question: "How does AASIOM use artificial intelligence?",
@@ -182,19 +164,19 @@ const frequentlyAskedQuestions = [
       "AI is used as an assistive layer for tasks such as extracting information, organising context, identifying gaps, classifying inputs, and proposing next actions. Sensitive operational values and final outputs remain subject to human confirmation.",
   },
   {
-    question: "What is ANVIRA?",
+    question: "How does AASIOM move from an idea to a working product?",
     answer:
-      "ANVIRA is AASIOM’s flagship product initiative: a WhatsApp-first, AI-assisted incident command and documentation platform being developed for Indian trucking fleets.",
+      "Work follows a structured path: discover the operating problem, define requirements and roles, architect the system, build in controlled phases, validate behaviour and assumptions, then improve using verified operational feedback.",
   },
   {
-    question: "Is ANVIRA already a production product?",
+    question: "What is ANVIRA?",
     answer:
-      "ANVIRA is in active development. Public previews should be understood as approved product concepts or development-stage interfaces unless a specific production milestone is formally confirmed.",
+      "ANVIRA is AASIOM’s flagship product initiative: an AI-assisted incident command and documentation platform in active development for Indian trucking fleets.",
   },
   {
     question: "Who should contact AASIOM?",
     answer:
-      "Enterprise teams, fleet operators, domain advisors, strategic partners, technology collaborators, and investors may contact AASIOM to discuss projects, pilots, partnerships, or the company’s next stage of development.",
+      "Enterprise teams, strategic partners, domain advisors, technology collaborators, and investors can contact AASIOM to discuss product and technology projects, partnerships, or the company’s next stage of development.",
   },
 ] as const;
 
@@ -209,7 +191,7 @@ export const homeContent = {
     trustLine: "Research-led. Product-driven. Human-controlled AI.",
     ctas: [
       { label: "Discuss a Project", href: "/contact" },
-      { label: "Explore ANVIRA", href: anviraProduct.route },
+      { label: "Explore ANVIRA", href: "/product" },
     ] as const satisfies readonly CTAContent[],
   },
   proofStrip: {
@@ -218,10 +200,10 @@ export const homeContent = {
   },
   companyIntroduction: {
     eyebrow: "Why AASIOM",
-    heading: "From operational complexity to clear digital systems.",
+    heading: "Built to turn complex operations into clear, usable systems.",
     paragraphs: [
-      "Many organisations do not suffer from a lack of information. They suffer because information arrives through disconnected channels, remains difficult to verify, and does not move through a clear operating workflow.",
-      "AASIOM combines research, product strategy, software engineering, AI assistance, and human governance to turn that complexity into systems that are visible, actionable, and designed for responsible growth.",
+      "AASIOM is an AI-first technology and product company focused on operating environments where information, decisions, and accountability are difficult to manage across disconnected workflows.",
+      "Our work combines operational research, product strategy, software engineering, and human-controlled AI so technology supports the way organisations actually work—not the other way around.",
     ],
     cta: { label: "Learn About AASIOM", href: "/about" },
   },
@@ -234,46 +216,37 @@ export const homeContent = {
   },
   capabilities: {
     eyebrow: "Capabilities",
-    heading: "Research, architecture, engineering, and AI—connected as one product discipline.",
+    heading: "From problem definition to working digital product.",
     introduction:
-      "AASIOM’s capability areas are designed to move an idea from problem definition to a structured, usable, and scalable digital product. Every engagement is scoped around the operating need rather than a generic service catalogue.",
+      "AASIOM connects research, product architecture, engineering, automation, and AI as one delivery discipline. Each engagement is shaped around the operating need rather than a generic service catalogue.",
     items: capabilityItems,
     cta: { label: "Discuss Your Requirement", href: "/contact" },
   },
   engineeringMethod: {
     eyebrow: "How we work",
-    heading: "A structured path from discovery to scale.",
+    heading: "A disciplined path from discovery to scale.",
     introduction:
-      "AASIOM uses a disciplined six-stage method to reduce ambiguity, control technical complexity, and keep product decisions connected to real operational needs.",
+      "AASIOM uses a six-stage method to reduce ambiguity, control technical complexity, and keep every product decision connected to real operational needs.",
     steps: engineeringMethod,
   },
   productSpotlight: {
-    eyebrow: "Flagship product initiative",
+    eyebrow: "Flagship product",
+    kicker: "One product. One focused operating problem.",
     name: anviraProduct.name,
     descriptor:
-      "WhatsApp-first, AI-assisted incident command and documentation for Indian trucking fleets.",
+      "A concise example of AASIOM’s product-building discipline.",
     teaser:
-      "ANVIRA is being developed to convert scattered incident updates—calls, chats, photos, voice notes, documents, and location context—into one structured case with clearer evidence, ownership, actions, blockers, downtime visibility, and a controlled incident dossier.",
-    lifecycle: ["Receive", "Verify", "Act", "Track", "Close"] as const,
-    aiRole:
-      "AI can extract, summarise, classify, identify gaps, and propose actions. People confirm sensitive operational values and final outputs.",
+      "ANVIRA is an AI-assisted incident command and documentation platform in active development for Indian trucking fleets. It applies AASIOM’s approach to a specific challenge: fragmented incident coordination.",
     status: "In active development",
     productId: anviraProduct.id,
-    cta: { label: "Explore ANVIRA", href: anviraProduct.route },
+    cta: { label: "Explore ANVIRA", href: "/product" },
   },
   trust: {
     eyebrow: "Responsible product building",
-    heading: "Trust is designed into the workflow—not added after launch.",
+    heading: "Trust is part of the architecture, not an afterthought.",
     introduction:
-      "AASIOM treats traceability, human control, transparent progress, and modular architecture as product requirements.",
+      "AASIOM treats problem fit, human control, transparent progress, and modular architecture as core product requirements.",
     items: trustItems,
-  },
-  ecosystem: {
-    eyebrow: "Technology direction",
-    heading: "Designed to connect intelligence, information, and action.",
-    introduction:
-      "The goal is not to add AI everywhere. The goal is to apply the right technical capability at the right stage of the workflow, with clear boundaries and review points.",
-    items: ecosystemItems,
   },
   strategicReview: {
     eyebrow: "For partners and investors",
@@ -293,7 +266,7 @@ export const homeContent = {
   },
   faq: {
     eyebrow: "Frequently asked questions",
-    heading: "Understanding AASIOM and ANVIRA",
+    heading: "Understanding AASIOM",
     items: frequentlyAskedQuestions,
   },
   closingCta: {
@@ -304,7 +277,7 @@ export const homeContent = {
       "Discuss the challenge with AASIOM and explore how research, product architecture, engineering, and responsible AI can be brought together around it.",
     ctas: [
       { label: "Discuss a Project", href: "/contact" },
-      { label: "Explore ANVIRA", href: anviraProduct.route },
+      { label: "Request a Strategic Review", href: "/strategic-review" },
     ] as const satisfies readonly CTAContent[],
   },
 } as const;

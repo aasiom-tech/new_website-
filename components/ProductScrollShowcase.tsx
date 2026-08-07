@@ -9,7 +9,7 @@ const tabs = [
     description:
       "Designed around people, workflows, constraints, decisions, and accountability rather than generic software assumptions.",
     image: "/images/product/tab-structured.jpg",
-    alt: "ANVIRA concept showing operational inputs flowing into a structured incident workspace",
+    alt: "AASIOM concept showing operational inputs flowing into a structured product workspace",
   },
   {
     title: "AI-assisted, human-controlled",
@@ -77,8 +77,6 @@ export function ProductScrollShowcase() {
       sectionTop = window.scrollY + rect.top;
       const viewport = Math.max(window.innerHeight, 1);
 
-      // Begin while the framed section is approaching and finish shortly
-      // before it settles into the sticky viewport.
       startY = sectionTop - viewport * 0.78;
       endY = sectionTop - viewport * 0.16;
     };
@@ -91,7 +89,6 @@ export function ProductScrollShowcase() {
       const progress = Math.max(0, Math.min(1, raw));
       const scale = 0.86 + progress * 0.14;
 
-      // Only one compositor-friendly transform value changes while scrolling.
       if (Math.abs(scale - lastScale) > 0.003) {
         section.style.setProperty(
           "--product-backdrop-scale",
@@ -143,7 +140,7 @@ export function ProductScrollShowcase() {
       <div className="product-scroll-showcase__sticky">
         <div className="product-showcase-frame">
           <div className="product-showcase-heading">
-            <p className="product-showcase-eyebrow">AASIOM PRODUCT EXPERIENCE</p>
+            <p className="product-showcase-eyebrow">AASIOM PRODUCT DISCIPLINE</p>
             <h2 id="product-experience-title">
               Designed for AI-assisted operational products.
             </h2>
@@ -152,10 +149,7 @@ export function ProductScrollShowcase() {
               brought together for real operating environments.
             </p>
             <div className="product-showcase-actions">
-              <a className="product-showcase-primary" href="/product/anvira">
-                Explore ANVIRA
-              </a>
-              <a className="product-showcase-secondary" href="/contact">
+              <a className="product-showcase-primary" href="/contact">
                 Discuss a Product Opportunity
               </a>
             </div>
@@ -207,9 +201,6 @@ export function ProductScrollShowcase() {
               </div>
 
               <div className="product-showcase-copy" aria-live="polite">
-                <p className="product-showcase-copy__label">
-                  {String(activeTab + 1).padStart(2, "0")} / 05
-                </p>
                 <h3>{active.title}</h3>
                 <p>{active.description}</p>
               </div>

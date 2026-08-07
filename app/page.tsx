@@ -2,13 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 import { ButtonLink } from "@/components/ButtonLink";
-import { PillarCard } from "@/components/PillarCard";
-import { ProductSpotlight } from "@/components/ProductSpotlight";
+import { CompanyMethodGlow } from "@/components/CompanyMethodGlow";
 import { SectionLabel } from "@/components/SectionLabel";
-import { WorkflowStepper } from "@/components/WorkflowStepper";
 import { company } from "@/content/company";
 import { homeContent } from "@/content/home";
-import { anviraProduct } from "@/content/products";
 
 export const metadata: Metadata = {
   title: company.legalName,
@@ -22,7 +19,6 @@ export default function HomePage() {
     homeContent.strategicReview.ctas;
   const [primaryClosingCta, secondaryClosingCta] =
     homeContent.closingCta.ctas;
-  const supportingProductStatuses = anviraProduct.status.slice(1);
 
   return (
     <>
@@ -147,26 +143,64 @@ export default function HomePage() {
 
       <section
         aria-labelledby="operational-reality-title"
-        className="section-spacing border-y border-border-muted bg-surface-secondary"
+        className="operational-challenge-section"
       >
-        <div className="container">
-          <div className="text-measure reveal-up">
+        <div className="container operational-challenge-layout">
+          <div className="operational-challenge-copy reveal-up">
             <SectionLabel>{homeContent.operationalReality.eyebrow}</SectionLabel>
-            <h2 id="operational-reality-title" className="mt-4">
+            <h2 id="operational-reality-title">
               {homeContent.operationalReality.heading}
             </h2>
-            <p className="type-body-large mt-5">
+            <p className="type-body-large">
               {homeContent.operationalReality.introduction}
             </p>
+
+            <div className="operational-challenge-principle" aria-label="AASIOM approach">
+              <span aria-hidden="true" className="operational-challenge-principle__mark" />
+              <div>
+                <p className="operational-challenge-principle__label">AASIOM starts here</p>
+                <p className="type-body-small">
+                  Understand the operation first. Then decide where structure, software, automation,
+                  or AI can create useful support.
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="reveal-stagger mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {homeContent.operationalReality.items.map((item) => (
-              <PillarCard
+          <div className="operational-challenge-grid reveal-stagger">
+            {homeContent.operationalReality.items.map((item, index) => (
+              <article
                 key={item.title}
-                title={item.title}
-                description={item.description}
-              />
+                className={`operational-challenge-card reveal-up operational-challenge-card--${index + 1}`}
+              >
+                <div className="operational-challenge-card__topline">
+                  <span className="operational-challenge-card__number">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="operational-challenge-card__signal" aria-hidden="true">
+                    <span />
+                    <span />
+                    <span />
+                  </span>
+                </div>
+
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </div>
+
+                {index === 0 ? (
+                  <div className="operational-challenge-card__map" aria-hidden="true">
+                    <span className="operational-map-node operational-map-node--1" />
+                    <span className="operational-map-node operational-map-node--2" />
+                    <span className="operational-map-node operational-map-node--3" />
+                    <span className="operational-map-node operational-map-node--4" />
+                    <span className="operational-map-line operational-map-line--1" />
+                    <span className="operational-map-line operational-map-line--2" />
+                    <span className="operational-map-line operational-map-line--3" />
+                  </div>
+                ) : null}
+              </article>
             ))}
           </div>
         </div>
@@ -175,145 +209,124 @@ export default function HomePage() {
       <section
         id="capabilities"
         aria-labelledby="capabilities-title"
-        className="section-spacing scroll-mt-24"
+        className="homepage-capabilities scroll-mt-24"
       >
-        <div className="container">
-          <div className="text-measure reveal-up">
-            <SectionLabel>{homeContent.capabilities.eyebrow}</SectionLabel>
-            <h2 id="capabilities-title" className="mt-4">
-              {homeContent.capabilities.heading}
-            </h2>
-            <p className="type-body-large mt-5">
-              {homeContent.capabilities.introduction}
-            </p>
+        <div className="container homepage-capabilities__inner">
+          <div className="homepage-capabilities__heading reveal-up">
+            <div>
+              <SectionLabel>{homeContent.capabilities.eyebrow}</SectionLabel>
+              <h2 id="capabilities-title">
+                {homeContent.capabilities.heading}
+              </h2>
+            </div>
+            <div className="homepage-capabilities__intro">
+              <p className="type-body-large">
+                {homeContent.capabilities.introduction}
+              </p>
+              <ButtonLink href={homeContent.capabilities.cta.href}>
+                {homeContent.capabilities.cta.label}
+              </ButtonLink>
+            </div>
           </div>
 
-          <div className="reveal-stagger mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {homeContent.capabilities.items.map((item) => (
-              <PillarCard
+          <div className="homepage-capabilities__grid reveal-stagger">
+            {homeContent.capabilities.items.map((item, index) => (
+              <article
                 key={item.title}
-                title={item.title}
-                description={item.description}
-              />
+                className={`homepage-capability-card reveal-up homepage-capability-card--${index + 1}`}
+              >
+                <div className="homepage-capability-card__meta">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <span className="homepage-capability-card__rail" aria-hidden="true" />
+                </div>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </article>
             ))}
-          </div>
-
-          <div className="mt-8 reveal-up">
-            <ButtonLink href={homeContent.capabilities.cta.href}>
-              {homeContent.capabilities.cta.label}
-            </ButtonLink>
           </div>
         </div>
       </section>
 
       <section
         aria-labelledby="engineering-method-title"
-        className="section-spacing border-y border-border-muted bg-surface-secondary"
+        className="company-method-section"
       >
-        <div className="container">
-          <div className="text-measure reveal-up">
-            <SectionLabel>{homeContent.engineeringMethod.eyebrow}</SectionLabel>
-            <h2 id="engineering-method-title" className="mt-4">
-              {homeContent.engineeringMethod.heading}
-            </h2>
-            <p className="type-body-large mt-5">
-              {homeContent.engineeringMethod.introduction}
-            </p>
-          </div>
+        <div className="container company-method-section__heading reveal-up">
+          <SectionLabel>{homeContent.engineeringMethod.eyebrow}</SectionLabel>
+          <h2 id="engineering-method-title">
+            {homeContent.engineeringMethod.heading}
+          </h2>
+          <p className="type-body-large">
+            {homeContent.engineeringMethod.introduction}
+          </p>
+        </div>
 
-          <div className="mt-8">
-            <WorkflowStepper steps={homeContent.engineeringMethod.steps} />
-          </div>
+        <div className="container company-method-section__timeline">
+          <CompanyMethodGlow steps={homeContent.engineeringMethod.steps} />
         </div>
       </section>
 
       <section
         aria-labelledby="product-spotlight-title"
-        className="section-spacing"
+        className="home-product-proof"
       >
         <div className="container">
-          <div className="reveal-up">
-            <SectionLabel>{homeContent.productSpotlight.eyebrow}</SectionLabel>
-          </div>
-          <div className="mt-4">
-            <ProductSpotlight
-              name={homeContent.productSpotlight.name}
-              descriptor={homeContent.productSpotlight.descriptor}
-              teaser={homeContent.productSpotlight.teaser}
-              status={homeContent.productSpotlight.status}
-              supportingStatuses={supportingProductStatuses}
-              cta={homeContent.productSpotlight.cta}
-              headingLevel="h2"
-              headingId="product-spotlight-title"
-            />
-          </div>
+          <article className="home-product-proof__card reveal-up">
+            <div className="home-product-proof__copy">
+              <SectionLabel>{homeContent.productSpotlight.eyebrow}</SectionLabel>
+              <p className="home-product-proof__kicker">{homeContent.productSpotlight.kicker}</p>
+              <h2 id="product-spotlight-title">{homeContent.productSpotlight.name}</h2>
+              <p className="home-product-proof__descriptor">
+                {homeContent.productSpotlight.descriptor}
+              </p>
+              <p className="home-product-proof__teaser">
+                {homeContent.productSpotlight.teaser}
+              </p>
+              <div className="home-product-proof__actions">
+                <span className="home-product-proof__status">
+                  <span aria-hidden="true" />
+                  {homeContent.productSpotlight.status}
+                </span>
+                <ButtonLink href={homeContent.productSpotlight.cta.href}>
+                  {homeContent.productSpotlight.cta.label}
+                </ButtonLink>
+              </div>
+            </div>
 
-          <div className="reveal-stagger mt-8 grid gap-5 md:grid-cols-2">
-            <div className="lift-card reveal-up rounded-lg border border-border bg-surface-secondary p-5 sm:p-6">
-              <p className="type-label text-text-primary">Lifecycle</p>
-              <p className="type-body-large mt-3 font-medium text-text-primary">
-                {homeContent.productSpotlight.lifecycle.join(" → ")}
-              </p>
+            <div className="home-product-proof__visual">
+              <span className="home-product-proof__preview-label">Concept preview</span>
+              <Image
+                src="/images/product/product-hero-anvira.jpg"
+                alt="ANVIRA product concept showing AASIOM's structured product-building approach."
+                width={1400}
+                height={900}
+                className="home-product-proof__image"
+              />
             </div>
-            <div className="lift-card reveal-up rounded-lg border border-border bg-surface-secondary p-5 sm:p-6">
-              <p className="type-label text-text-primary">Role of AI</p>
-              <p className="type-body-small mt-3">
-                {homeContent.productSpotlight.aiRole}
-              </p>
-            </div>
-          </div>
+          </article>
         </div>
       </section>
 
       <section
         aria-labelledby="trust-standards-title"
-        className="section-spacing border-y border-border-muted bg-surface-secondary"
+        className="responsible-build-section"
       >
         <div className="container">
-          <div className="text-measure reveal-up">
+          <div className="responsible-build-section__heading reveal-up">
             <SectionLabel>{homeContent.trust.eyebrow}</SectionLabel>
-            <h2 id="trust-standards-title" className="mt-4">
-              {homeContent.trust.heading}
-            </h2>
-            <p className="type-body-large mt-5">
-              {homeContent.trust.introduction}
-            </p>
+            <h2 id="trust-standards-title">{homeContent.trust.heading}</h2>
+            <p className="type-body-large">{homeContent.trust.introduction}</p>
           </div>
 
-          <div className="reveal-stagger mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {homeContent.trust.items.map((item) => (
-              <PillarCard
-                key={item.title}
-                title={item.title}
-                description={item.description}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section
-        aria-labelledby="ecosystem-title"
-        className="section-spacing"
-      >
-        <div className="container">
-          <div className="text-measure reveal-up">
-            <SectionLabel>{homeContent.ecosystem.eyebrow}</SectionLabel>
-            <h2 id="ecosystem-title" className="mt-4">
-              {homeContent.ecosystem.heading}
-            </h2>
-            <p className="type-body-large mt-5">
-              {homeContent.ecosystem.introduction}
-            </p>
-          </div>
-
-          <div className="reveal-stagger mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {homeContent.ecosystem.items.map((item) => (
-              <PillarCard
-                key={item.title}
-                title={item.title}
-                description={item.description}
-              />
+          <div className="responsible-build-grid reveal-stagger">
+            {homeContent.trust.items.map((item, index) => (
+              <article key={item.title} className="responsible-build-card reveal-up">
+                <span className="responsible-build-card__index">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </article>
             ))}
           </div>
         </div>
@@ -321,9 +334,9 @@ export default function HomePage() {
 
       <section
         aria-labelledby="strategic-review-title"
-        className="section-spacing border-y border-border-on-dark bg-surface-dark"
+        className="home-strategic-section"
       >
-        <div className="container">
+        <div className="container home-strategic-section__inner">
           <div className="reveal-up">
             <SectionLabel>{homeContent.strategicReview.eyebrow}</SectionLabel>
             <h2
@@ -347,7 +360,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section aria-labelledby="faq-title" className="section-spacing">
+      <section aria-labelledby="faq-title" className="home-faq-section">
         <div className="container">
           <div className="text-measure reveal-up">
             <SectionLabel>{homeContent.faq.eyebrow}</SectionLabel>
@@ -371,9 +384,9 @@ export default function HomePage() {
 
       <section
         aria-labelledby="closing-action-title"
-        className="border-t border-border-on-dark bg-surface-dark"
+        className="home-closing-cta"
       >
-        <div className="container py-12 lg:py-16 reveal-up">
+        <div className="container home-closing-cta__inner reveal-up">
           <SectionLabel>{homeContent.closingCta.eyebrow}</SectionLabel>
           <h2
             id="closing-action-title"
