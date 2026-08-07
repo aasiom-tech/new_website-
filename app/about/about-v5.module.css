@@ -1076,3 +1076,109 @@
     padding-top: 4rem;
   }
 }
+
+
+/* V10: mentor review — softer hero blend + text-free story imagery */
+@media (min-width: 55.01rem) {
+  .heroGrid {
+    grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+  }
+
+  .heroCopy {
+    z-index: 5;
+  }
+
+  .heroVisual {
+    width: min(73%, 66rem);
+    transform: translateX(-1.7rem);
+  }
+
+  .heroVisual::before {
+    background:
+      linear-gradient(90deg,
+        #fff 0%,
+        rgb(255 255 255 / .995) 6%,
+        rgb(255 255 255 / .95) 12%,
+        rgb(255 255 255 / .78) 19%,
+        rgb(255 255 255 / .48) 26%,
+        rgb(255 255 255 / .20) 33%,
+        rgb(255 255 255 / .06) 39%,
+        transparent 46%),
+      linear-gradient(180deg,
+        transparent 75%,
+        rgb(255 255 255 / .12) 83%,
+        rgb(255 255 255 / .72) 96%,
+        #fff 100%);
+  }
+
+  .heroVisual::after {
+    left: -7rem;
+    width: 14rem;
+    background: radial-gradient(
+      ellipse at right center,
+      rgb(255 255 255 / .04),
+      rgb(255 255 255 / .88) 66%,
+      #fff 82%
+    );
+    filter: blur(10px);
+    opacity: .9;
+  }
+}
+
+.storyPanel {
+  background-position: center;
+}
+
+.storyPanel::before {
+  background:
+    linear-gradient(90deg, rgb(3 21 36 / .68), rgb(3 21 36 / .34) 58%, rgb(3 21 36 / .58)),
+    linear-gradient(180deg, rgb(3 18 31 / .32), rgb(3 18 31 / .76));
+}
+
+.storyPanelActive::before {
+  background:
+    linear-gradient(90deg,
+      rgb(3 24 41 / .98) 0%,
+      rgb(3 24 41 / .94) 36%,
+      rgb(3 24 41 / .74) 58%,
+      rgb(3 24 41 / .32) 82%,
+      rgb(3 24 41 / .46) 100%);
+}
+
+.storyCopy {
+  width: min(39rem, 68%);
+}
+
+.storyDescription {
+  max-width: 34rem;
+}
+
+.storyHighlights {
+  width: min(45rem, 72%);
+}
+
+@media (max-width: 74rem) and (min-width: 55.01rem) {
+  .heroVisual {
+    width: 72%;
+    transform: translateX(-.75rem);
+  }
+
+  .storyCopy {
+    width: 72%;
+  }
+
+  .storyHighlights {
+    width: 74%;
+  }
+}
+
+@media (max-width: 55rem) {
+  .heroVisual {
+    transform: none;
+  }
+
+  .storyCopy,
+  .storyHighlights {
+    width: auto;
+  }
+}

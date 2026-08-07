@@ -12,7 +12,7 @@ const panels = [
     title: "Technology services for real business needs.",
     description:
       "AASIOM Technologies Private Limited is a Mumbai-based technology and product engineering company. We work with businesses, founders and teams to design and build websites, web applications, dashboards, automation, AI-enabled tools and custom software.",
-    image: "/images/about/story-who.jpg",
+    image: "/images/about/story-who-v11.jpg",
     highlights: [
       ["Client Focused", "Your goals drive our solutions."],
       ["End to End", "From idea to deployment."],
@@ -28,7 +28,7 @@ const panels = [
     title: "Turn ideas and manual workflows into useful digital systems.",
     description:
       "We help clients move from a requirement, workflow problem or early-stage idea to a clear solution through structured discovery, design, engineering, automation, deployment and support.",
-    image: "/images/about/story-mission.jpg",
+    image: "/images/about/story-mission-clean.jpg",
     highlights: [
       ["Discover", "Understand the business need."],
       ["Define", "Clarify scope and outcomes."],
@@ -44,7 +44,7 @@ const panels = [
     title: "A trusted technology partner with deeper product capability.",
     description:
       "Our direction is to grow a dependable cross-industry client-services practice while continuing to strengthen the research, architecture and engineering discipline required to create selected proprietary products.",
-    image: "/images/about/story-vision.jpg",
+    image: "/images/about/story-vision-clean.jpg",
     highlights: [
       ["Services", "Commercially useful today."],
       ["Research", "Understand before building."],
@@ -60,7 +60,7 @@ const panels = [
     title: "Clear scope. Practical engineering. Responsible delivery.",
     description:
       "We start with the problem and intended outcome, keep decisions visible, select technology for a reason and treat usability, security, testing and maintainability as part of the build from the start.",
-    image: "/images/about/story-principles.jpg",
+    image: "/images/about/story-principles-clean.jpg",
     highlights: [
       ["Problem First", "Technology follows the need."],
       ["Transparent", "Decisions stay visible."],
@@ -76,7 +76,7 @@ const panels = [
     title: "Client delivery now. Product ambition alongside it.",
     description:
       "Client technology services are AASIOM's immediate commercial focus. Alongside delivery work, selected proprietary initiatives such as ANVIRA deepen the company's product, research and engineering capability.",
-    image: "/images/about/story-direction.jpg",
+    image: "/images/about/story-direction-v11.jpg",
     highlights: [
       ["Web", "Sites, apps and dashboards."],
       ["Automation", "Smarter workflows."],

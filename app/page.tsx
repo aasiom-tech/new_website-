@@ -15,8 +15,6 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   const [primaryHeroCta, secondaryHeroCta] = homeContent.hero.ctas;
-  const [primaryStrategicCta, secondaryStrategicCta] =
-    homeContent.strategicReview.ctas;
   const [primaryClosingCta, secondaryClosingCta] =
     homeContent.closingCta.ctas;
 
@@ -158,7 +156,7 @@ export default function HomePage() {
             <div className="operational-challenge-principle" aria-label="AASIOM approach">
               <span aria-hidden="true" className="operational-challenge-principle__mark" />
               <div>
-                <p className="operational-challenge-principle__label">AASIOM starts here</p>
+                <p className="operational-challenge-principle__label">AASIOM starts with the requirement</p>
                 <p className="type-body-small">
                   Understand the operation first. Then decide where structure, software, automation,
                   or AI can create useful support.
@@ -328,34 +326,6 @@ export default function HomePage() {
                 <p>{item.description}</p>
               </article>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section
-        aria-labelledby="strategic-review-title"
-        className="home-strategic-section"
-      >
-        <div className="container home-strategic-section__inner">
-          <div className="reveal-up">
-            <SectionLabel>{homeContent.strategicReview.eyebrow}</SectionLabel>
-            <h2
-              id="strategic-review-title"
-              className="mt-4 max-w-3xl !text-text-on-dark"
-            >
-              {homeContent.strategicReview.heading}
-            </h2>
-            <p className="type-body-large mt-5 max-w-3xl !text-text-on-dark">
-              {homeContent.strategicReview.description}
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <ButtonLink href={primaryStrategicCta.href}>
-                {primaryStrategicCta.label}
-              </ButtonLink>
-              <ButtonLink href={secondaryStrategicCta.href} variant="secondary">
-                {secondaryStrategicCta.label}
-              </ButtonLink>
-            </div>
           </div>
         </div>
       </section>

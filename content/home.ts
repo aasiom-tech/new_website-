@@ -8,80 +8,90 @@ import type {
 
 const proofPoints = [
   {
-    title: "Specification-led development",
+    title: "Business Websites",
     description:
-      "Clear requirements, workflows, roles, constraints, and acceptance criteria guide implementation.",
+      "Responsive, professional websites for companies, professionals, and growing brands.",
   },
   {
-    title: "Human-confirmed AI",
+    title: "Web Apps & Dashboards",
     description:
-      "AI may assist with extraction, classification, summarisation, and recommendations while people confirm sensitive outputs.",
+      "Custom internal tools, admin panels, business dashboards, and role-based web applications.",
   },
   {
-    title: "Phased technical governance",
+    title: "Custom Software & MVPs",
     description:
-      "Architecture, validation, security, integration, and deployment are approached through controlled stages.",
+      "Turn a validated idea or manual process into a structured working digital product.",
   },
   {
-    title: "Founder-led execution",
+    title: "AI & Workflow Automation",
     description:
-      "Company direction, product definition, research, and delivery decisions remain closely connected.",
+      "Reduce repetitive work, organise information, and support decisions with practical automation.",
+  },
+  {
+    title: "UI/UX & Product Design",
+    description:
+      "User flows, wireframes, interface systems, and responsive experiences designed around real users.",
+  },
+  {
+    title: "API, Backend & Integrations",
+    description:
+      "Secure backend services, databases, APIs, and integrations that connect products reliably.",
   },
 ] as const satisfies readonly ContentItem[];
 
 const operationalRealityItems = [
   {
-    title: "Fragmented information",
+    title: "Startups & founders",
     description:
-      "Critical context is often scattered across calls, chats, documents, voice notes, images, and individual memory—making a complete operating picture harder to form.",
+      "Move from an early idea or validated concept to an MVP, prototype, or working digital product with a clear scope.",
   },
   {
-    title: "Delayed decisions",
+    title: "SMEs digitising operations",
     description:
-      "When information is incomplete or difficult to verify, teams spend time reconstructing events before they can decide what should happen next.",
+      "Replace manual coordination, spreadsheets, and fragmented processes with structured dashboards, tools, and automation.",
   },
   {
-    title: "Unclear ownership",
+    title: "Local businesses & professionals",
     description:
-      "Actions, approvals, blockers, and follow-ups become harder to track when responsibility lives across disconnected channels.",
+      "Build credible websites, booking or enquiry experiences, lightweight systems, and digital workflows that support day-to-day business.",
   },
   {
-    title: "Generic software mismatch",
+    title: "Teams improving internal workflows",
     description:
-      "Off-the-shelf tools can digitise isolated tasks without reflecting the operation, users, constraints, or decision flow they are meant to support.",
+      "Create admin systems, role-based applications, reporting tools, integrations, and AI-assisted workflows around specific operational needs.",
   },
 ] as const satisfies readonly ContentItem[];
 
 const capabilityItems = [
   {
-    title: "AI-enabled platforms",
+    title: "Business Websites",
     description:
-      "Focused systems that use AI to organise information, identify patterns, surface gaps, and support reviewable decisions.",
+      "Fast, responsive, conversion-focused websites for companies, professionals, and growing brands.",
   },
   {
-    title: "Enterprise software and dashboards",
+    title: "Web Apps & Dashboards",
     description:
-      "Structured interfaces that bring operational context, evidence, status, actions, and oversight into one working view.",
+      "Custom internal tools, admin panels, business dashboards, and role-based applications designed around real workflows.",
   },
   {
-    title: "Workflow automation",
+    title: "Custom Software & MVPs",
     description:
-      "Purpose-built workflows that reduce repetitive coordination, clarify ownership, and keep critical follow-ups visible.",
+      "Turn a validated idea or manual business process into a structured working product with room to evolve.",
   },
   {
-    title: "Product strategy and architecture",
+    title: "AI & Workflow Automation",
     description:
-      "Research, requirement definition, user journeys, system boundaries, data flows, and scalable technical planning.",
+      "Use AI and automation where they create practical value by reducing repetitive work, organising information, and supporting decisions.",
   },
   {
-    title: "Research and digital transformation",
+    title: "UI/UX & Product Design",
     description:
-      "Operational study and technology planning that help organisations move from fragmented practices to structured systems.",
+      "User flows, wireframes, interface systems, prototypes, and responsive experiences shaped around the people who will use them.",
   },
   {
-    title: "Web and application engineering",
+    title: "API, Backend & Integration",
     description:
-      "Responsive digital products designed around usability, maintainability, performance, and future integration needs.",
+      "Secure backend services, databases, APIs, and third-party integrations that keep the product connected and maintainable.",
   },
 ] as const satisfies readonly ContentItem[];
 
@@ -90,93 +100,93 @@ const engineeringMethod = [
     number: 1,
     title: "Discover",
     description:
-      "Study the operation, users, pain points, information flow, constraints, and existing tools.",
+      "Understand the business goal, users, current process, constraints, available information, and the outcome the project needs to create.",
   },
   {
     number: 2,
     title: "Define",
     description:
-      "Translate the problem into clear requirements, roles, decisions, workflows, and success criteria.",
+      "Turn the requirement into a clear scope, priorities, user roles, workflows, deliverables, and success criteria before implementation begins.",
   },
   {
     number: 3,
-    title: "Architect",
+    title: "Design",
     description:
-      "Plan the system structure, data movement, interfaces, integrations, controls, and responsible role of AI.",
+      "Plan the user experience and technical structure together: flows, interfaces, data, integrations, architecture, and the responsible role of AI where relevant.",
   },
   {
     number: 4,
     title: "Build",
     description:
-      "Develop reusable, modular components through phased implementation rather than uncontrolled feature expansion.",
+      "Develop the agreed solution in controlled, reusable modules with regular review instead of uncontrolled feature expansion.",
   },
   {
     number: 5,
-    title: "Validate",
+    title: "Launch",
     description:
-      "Test behaviour, accessibility, reliability, security assumptions, and alignment with the approved specification.",
+      "Validate key journeys, responsive behaviour, performance, reliability, security assumptions, and deployment readiness before release.",
   },
   {
     number: 6,
-    title: "Scale",
+    title: "Support",
     description:
-      "Improve the product using verified operational feedback while preserving accountability and human control.",
+      "Maintain, improve, and extend the delivered system using real usage feedback, changing requirements, and clearly prioritised next steps.",
   },
 ] as const satisfies readonly NumberedContentItem[];
 
 const trustItems = [
   {
-    title: "Problem before technology",
+    title: "Clear scope before build",
     description:
-      "Technology choices follow the operational problem, user environment, and required outcomes—not the other way around.",
+      "Requirements, users, workflows, priorities, and expected outcomes are clarified before implementation so the project starts with shared understanding.",
   },
   {
-    title: "Human control over sensitive AI outputs",
+    title: "End-to-end delivery",
     description:
-      "AI supports people with organised context and proposals, while consequential values and final outputs remain reviewable.",
+      "Research, UX, engineering, integration, deployment, and support are connected as one delivery path instead of isolated hand-offs.",
   },
   {
-    title: "Transparent progress",
+    title: "Maintainable engineering",
     description:
-      "Completed, in-progress, and pending work should be communicated accurately without unsupported performance claims.",
+      "Systems are designed for usability, performance, security, and future change rather than short-term feature volume.",
   },
   {
-    title: "Modular and scalable architecture",
+    title: "Transparent progress & handover",
     description:
-      "Systems are structured so capabilities, integrations, and workflows can evolve without unnecessary rebuilding.",
+      "Project status, decisions, limitations, and next steps are communicated clearly, with practical documentation and support around delivery.",
   },
 ] as const satisfies readonly ContentItem[];
 
 const frequentlyAskedQuestions = [
   {
-    question: "What kind of problems does AASIOM work on?",
+    question: "What can AASIOM build for a client?",
     answer:
-      "AASIOM focuses on operational problems where information is fragmented, decisions are difficult to coordinate, workflows are unclear, or existing software does not fit the way work actually happens.",
+      "AASIOM delivers business websites, web applications, dashboards, custom software and MVPs, workflow automation, AI-enabled tools, UI/UX design, backend systems, APIs, databases, and integrations.",
   },
   {
-    question: "What does AASIOM build?",
+    question: "Who does AASIOM work with?",
     answer:
-      "AASIOM designs intelligent systems and scalable digital products, including AI-enabled platforms, enterprise software and dashboards, workflow automation, and web or application products shaped around specific operating needs.",
+      "AASIOM works with startups, founders, SMEs, local businesses, professionals, and growing teams that need a practical digital system, stronger web presence, internal tool, automation, or custom software solution.",
   },
   {
-    question: "How does AASIOM use artificial intelligence?",
+    question: "Can AASIOM handle a project from idea to launch?",
     answer:
-      "AI is used as an assistive layer for tasks such as extracting information, organising context, identifying gaps, classifying inputs, and proposing next actions. Sensitive operational values and final outputs remain subject to human confirmation.",
+      "Yes. Depending on the engagement, AASIOM can support discovery, requirement definition, UX, technical planning, development, integration, validation, deployment, and post-launch improvement as one connected process.",
   },
   {
-    question: "How does AASIOM move from an idea to a working product?",
+    question: "Can AASIOM improve or extend an existing system?",
     answer:
-      "Work follows a structured path: discover the operating problem, define requirements and roles, architect the system, build in controlled phases, validate behaviour and assumptions, then improve using verified operational feedback.",
+      "Yes. Existing websites, applications, dashboards, workflows, or internal tools can be reviewed to identify where redesign, engineering, integration, automation, or structured improvements may be useful.",
+  },
+  {
+    question: "Does every AASIOM project use artificial intelligence?",
+    answer:
+      "No. AASIOM uses AI only where it creates clear value. Many projects may be better served by strong UX, reliable software, workflow design, automation, integrations, or conventional engineering without unnecessary AI.",
   },
   {
     question: "What is ANVIRA?",
     answer:
-      "ANVIRA is AASIOM’s flagship product initiative: an AI-assisted incident command and documentation platform in active development for Indian trucking fleets.",
-  },
-  {
-    question: "Who should contact AASIOM?",
-    answer:
-      "Enterprise teams, strategic partners, domain advisors, technology collaborators, and investors can contact AASIOM to discuss product and technology projects, partnerships, or the company’s next stage of development.",
+      "ANVIRA is AASIOM’s proprietary product initiative in active development for Indian trucking fleets. It demonstrates AASIOM’s product research, architecture, workflow, and engineering discipline alongside the company’s client-services work.",
   },
 ] as const;
 
@@ -184,100 +194,85 @@ export const homeContent = {
   route: "/",
   availability: "approved",
   hero: {
-    eyebrow: "AI-first technology and product company",
-    headline: "Engineering intelligent systems for real-world operations.",
+    eyebrow: "Technology services + product engineering",
+    headline:
+      "We build websites, software and AI systems for real business needs.",
     valueProposition:
-      `${company.legalName} transforms complex business and operational problems into structured, scalable, and human-centred digital systems.`,
-    trustLine: "Research-led. Product-driven. Human-controlled AI.",
+      "AASIOM helps startups, SMEs and growing teams turn ideas and manual workflows into clear digital products—from research and UX through development, automation, deployment and support.",
+    trustLine: "Client-focused. End-to-end. Built for practical use.",
     ctas: [
-      { label: "Discuss a Project", href: "/contact" },
-      { label: "Explore ANVIRA", href: "/product" },
+      { label: "Start a Project", href: "/contact" },
+      { label: "Explore Services", href: "#capabilities" },
     ] as const satisfies readonly CTAContent[],
   },
   proofStrip: {
-    heading: "A disciplined foundation for intelligent product development",
+    heading: "What clients can hire AASIOM to build",
     items: proofPoints,
   },
   companyIntroduction: {
-    eyebrow: "Why AASIOM",
-    heading: "Built to turn complex operations into clear, usable systems.",
+    eyebrow: "Technology services",
+    heading: "Practical digital systems built around real business needs.",
     paragraphs: [
-      "AASIOM is an AI-first technology and product company focused on operating environments where information, decisions, and accountability are difficult to manage across disconnected workflows.",
-      "Our work combines operational research, product strategy, software engineering, and human-controlled AI so technology supports the way organisations actually work—not the other way around.",
+      "AASIOM works with startups, SMEs, local businesses, professionals, and growing teams that need practical technology—not generic packages or unnecessary complexity.",
+      "From websites and dashboards to custom software and automation, each engagement connects discovery, design, engineering, deployment, and support around the actual requirement.",
     ],
     cta: { label: "Learn About AASIOM", href: "/about" },
   },
   operationalReality: {
-    eyebrow: "The operational challenge",
-    heading: "Technology creates value only when it fits the way work actually happens.",
+    eyebrow: "Who we work with",
+    heading: "Different clients. Different workflows. One need for technology that fits.",
     introduction:
-      "AASIOM begins by understanding the real operating environment: who provides information, how decisions are made, where accountability breaks down, and which constraints cannot be ignored.",
+      "AASIOM works across industries and project stages. The common starting point is a clear business need that can be improved through thoughtful design, software, automation, or integration.",
     items: operationalRealityItems,
   },
   capabilities: {
-    eyebrow: "Capabilities",
-    heading: "From problem definition to working digital product.",
+    eyebrow: "Technology services",
+    heading: "What AASIOM can build for you.",
     introduction:
-      "AASIOM connects research, product architecture, engineering, automation, and AI as one delivery discipline. Each engagement is shaped around the operating need rather than a generic service catalogue.",
+      "Choose a focused service or bring a broader requirement. AASIOM can connect product thinking, design, software engineering, automation, backend systems, and integrations into one delivery path.",
     items: capabilityItems,
-    cta: { label: "Discuss Your Requirement", href: "/contact" },
+    cta: { label: "Discuss Your Project", href: "/contact" },
   },
   engineeringMethod: {
     eyebrow: "How we work",
-    heading: "A disciplined path from discovery to scale.",
+    heading: "A clear path from requirement to launch and support.",
     introduction:
-      "AASIOM uses a six-stage method to reduce ambiguity, control technical complexity, and keep every product decision connected to real operational needs.",
+      "AASIOM uses a structured six-stage delivery approach to reduce ambiguity, keep scope connected to business needs, and make progress easier to review.",
     steps: engineeringMethod,
   },
   productSpotlight: {
-    eyebrow: "Flagship product",
-    kicker: "One product. One focused operating problem.",
+    eyebrow: "AASIOM product lab",
+    kicker: "Client services today. Proprietary product R&D alongside.",
     name: anviraProduct.name,
     descriptor:
-      "A concise example of AASIOM’s product-building discipline.",
+      "A focused example of AASIOM’s product research and engineering discipline.",
     teaser:
-      "ANVIRA is an AI-assisted incident command and documentation platform in active development for Indian trucking fleets. It applies AASIOM’s approach to a specific challenge: fragmented incident coordination.",
+      "ANVIRA is an AI-assisted incident command and documentation platform in active development for Indian trucking fleets. It gives AASIOM a focused environment for deep product research, workflow design, architecture, and responsible AI experimentation alongside client delivery.",
     status: "In active development",
     productId: anviraProduct.id,
     cta: { label: "Explore ANVIRA", href: "/product" },
   },
   trust: {
-    eyebrow: "Responsible product building",
-    heading: "Trust is part of the architecture, not an afterthought.",
+    eyebrow: "Why work with AASIOM",
+    heading: "Good delivery is more than writing code.",
     introduction:
-      "AASIOM treats problem fit, human control, transparent progress, and modular architecture as core product requirements.",
+      "AASIOM combines clear scope, end-to-end ownership, maintainable engineering, and transparent handover so the delivered system remains useful beyond launch.",
     items: trustItems,
-  },
-  strategicReview: {
-    eyebrow: "For partners and investors",
-    heading: "Build, partner, or invest in the next stage of AASIOM.",
-    description:
-      "AASIOM is open to conversations with pilot fleets, domain advisors, strategic introducers, technology partners, enterprise leaders, and investors who understand the value of disciplined product development for complex operational environments.",
-    ctas: [
-      {
-        label: "Request a Strategic Review",
-        href: "/strategic-review",
-      },
-      {
-        label: "Speak with the Founder",
-        href: "/contact",
-      },
-    ] as const satisfies readonly CTAContent[],
   },
   faq: {
     eyebrow: "Frequently asked questions",
-    heading: "Understanding AASIOM",
+    heading: "Working with AASIOM",
     items: frequentlyAskedQuestions,
   },
   closingCta: {
     availability: "approved",
-    eyebrow: "Start a strategic conversation",
-    heading: "Have a complex operational problem that needs a clearer system?",
+    eyebrow: "Start a project",
+    heading: "Have a website, app, dashboard, automation, or software idea to build?",
     description:
-      "Discuss the challenge with AASIOM and explore how research, product architecture, engineering, and responsible AI can be brought together around it.",
+      "Tell AASIOM what you are trying to improve, build, or replace. We can help turn the requirement into a clear digital solution and practical delivery plan.",
     ctas: [
-      { label: "Discuss a Project", href: "/contact" },
-      { label: "Request a Strategic Review", href: "/strategic-review" },
+      { label: "Start a Project", href: "/contact" },
+      { label: "Explore Services", href: "#capabilities" },
     ] as const satisfies readonly CTAContent[],
   },
 } as const;

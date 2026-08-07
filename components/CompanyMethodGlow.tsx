@@ -13,12 +13,12 @@ type CompanyMethodGlowProps = {
 };
 
 const stageMeta = [
-  { kicker: "Research signals", status: "Operational context captured" },
-  { kicker: "Requirements system", status: "Decision model defined" },
-  { kicker: "System blueprint", status: "Boundaries and controls mapped" },
-  { kicker: "Phased implementation", status: "Modules moving into delivery" },
-  { kicker: "Quality gate", status: "Behaviour checked against specification" },
-  { kicker: "Feedback loop", status: "Verified learning feeds the next cycle" },
+  { kicker: "Project discovery", status: "Business need and users understood" },
+  { kicker: "Scope definition", status: "Priorities and deliverables clarified" },
+  { kicker: "Experience + architecture", status: "UX and technical plan aligned" },
+  { kicker: "Phased implementation", status: "Agreed modules moving into delivery" },
+  { kicker: "Launch readiness", status: "Key journeys checked before release" },
+  { kicker: "Ongoing support", status: "Live feedback informs the next iteration" },
 ] as const;
 
 function DiscoverVisual() {
@@ -27,20 +27,20 @@ function DiscoverVisual() {
       <div className="method-canvas__grid" />
       <div className="discover-signals">
         <span>Users</span>
-        <span>Pain points</span>
-        <span>Evidence</span>
+        <span>Business goals</span>
+        <span>Current process</span>
       </div>
       <div className="discover-streams" aria-hidden="true">
         <i /><i /><i />
       </div>
       <div className="discover-map">
         <div className="discover-map__header">
-          <span>Operational map</span>
+          <span>Project context</span>
           <b>01</b>
         </div>
-        <div className="discover-map__row"><span /> Information flow</div>
-        <div className="discover-map__row"><span /> Decision points</div>
+        <div className="discover-map__row"><span /> Requirements</div>
         <div className="discover-map__row"><span /> Constraints</div>
+        <div className="discover-map__row"><span /> Opportunities</div>
       </div>
     </div>
   );
@@ -50,14 +50,14 @@ function DefineVisual() {
   return (
     <div className="method-canvas method-canvas--define">
       <div className="method-canvas__grid" />
-      <div className="define-question">Operational problem</div>
+      <div className="define-question">Project requirement</div>
       <div className="define-lanes">
-        <div><span>Roles</span><b>Who acts?</b></div>
-        <div><span>Decisions</span><b>What must be clear?</b></div>
-        <div><span>Criteria</span><b>What proves success?</b></div>
+        <div><span>Audience</span><b>Who uses it?</b></div>
+        <div><span>Scope</span><b>What must it do?</b></div>
+        <div><span>Outcome</span><b>What should improve?</b></div>
       </div>
       <div className="define-output">
-        <span>Defined product brief</span>
+        <span>Defined project brief</span>
         <i />
       </div>
     </div>
@@ -70,19 +70,19 @@ function ArchitectVisual() {
       <div className="method-canvas__grid" />
       <div className="architecture-stack">
         <div className="architecture-layer architecture-layer--top">
-          <span>Experience layer</span><b>Interfaces</b>
+          <span>Experience layer</span><b>User flows + UI</b>
         </div>
         <div className="architecture-layer architecture-layer--middle">
-          <span>Decision layer</span><b>Workflow + AI</b>
+          <span>System layer</span><b>Architecture + APIs</b>
         </div>
         <div className="architecture-layer architecture-layer--bottom">
-          <span>Foundation layer</span><b>Data + Controls</b>
+          <span>Foundation layer</span><b>Data + Security</b>
         </div>
       </div>
       <div className="architecture-rail" aria-hidden="true">
         <span /><span /><span />
       </div>
-      <div className="architecture-badge">Responsible system boundary</div>
+      <div className="architecture-badge">Design + technical blueprint</div>
     </div>
   );
 }
@@ -111,16 +111,16 @@ function ValidateVisual() {
     <div className="method-canvas method-canvas--validate">
       <div className="method-canvas__grid" />
       <div className="validate-panel">
-        <div className="validate-panel__title"><span>Validation matrix</span><b>Review</b></div>
-        <div className="validate-row"><i>✓</i><span>Behaviour</span><b>Aligned</b></div>
-        <div className="validate-row"><i>✓</i><span>Accessibility</span><b>Checked</b></div>
-        <div className="validate-row"><i>✓</i><span>Reliability</span><b>Checked</b></div>
-        <div className="validate-row validate-row--focus"><i>•</i><span>Security assumptions</span><b>Review</b></div>
+        <div className="validate-panel__title"><span>Launch checklist</span><b>Release</b></div>
+        <div className="validate-row"><i>✓</i><span>Core journeys</span><b>Checked</b></div>
+        <div className="validate-row"><i>✓</i><span>Responsive UI</span><b>Checked</b></div>
+        <div className="validate-row"><i>✓</i><span>Performance</span><b>Checked</b></div>
+        <div className="validate-row validate-row--focus"><i>•</i><span>Security + deployment</span><b>Review</b></div>
       </div>
       <div className="validate-score">
-        <span>Specification</span>
+        <span>Approved build</span>
         <strong>↔</strong>
-        <span>Observed behaviour</span>
+        <span>Launch readiness</span>
       </div>
     </div>
   );
@@ -133,15 +133,15 @@ function ScaleVisual() {
       <div className="scale-loop" aria-hidden="true">
         <div className="scale-loop__ring scale-loop__ring--outer" />
         <div className="scale-loop__ring scale-loop__ring--inner" />
-        <div className="scale-loop__core"><span>Verified</span><b>Feedback</b></div>
-        <span className="scale-loop__node scale-loop__node--one">Observe</span>
+        <div className="scale-loop__core"><span>Live</span><b>Product</b></div>
+        <span className="scale-loop__node scale-loop__node--one">Monitor</span>
         <span className="scale-loop__node scale-loop__node--two">Improve</span>
-        <span className="scale-loop__node scale-loop__node--three">Govern</span>
+        <span className="scale-loop__node scale-loop__node--three">Support</span>
       </div>
       <div className="scale-roadmap">
-        <span>Next cycle</span>
+        <span>Next iteration</span>
         <div><i /><i /><i /><i /></div>
-        <small>Improve without losing accountability</small>
+        <small>Maintain, improve, and extend when needed</small>
       </div>
     </div>
   );

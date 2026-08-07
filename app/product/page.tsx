@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import productHeroSize from "./product-hero-size.module.css";
 import Image from "next/image";
 
 import { ButtonLink } from "@/components/ButtonLink";
@@ -49,7 +50,7 @@ export default function ProductPage() {
         <div className="container product-page-hero__grid">
           <div className="product-page-hero__copy">
             <SectionLabel>AASIOM Products</SectionLabel>
-            <h1 id="product-page-title">
+            <h1 id="product-page-title" className={productHeroSize.heroTitle}>
               Focused products for complex operational problems.
             </h1>
             <p>

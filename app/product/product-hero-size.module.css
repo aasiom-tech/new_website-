@@ -1,0 +1,21 @@
+.heroTitle {
+  font-size: clamp(3rem, 4.1vw, 4.75rem) !important;
+  line-height: 0.98 !important;
+  letter-spacing: -0.045em;
+  max-width: 10.5ch;
+}
+
+@media (max-width: 64rem) {
+  .heroTitle {
+    font-size: clamp(3rem, 6.4vw, 4.25rem) !important;
+    max-width: 12ch;
+  }
+}
+
+@media (max-width: 48rem) {
+  .heroTitle {
+    font-size: clamp(2.55rem, 10.5vw, 3.25rem) !important;
+    line-height: 1 !important;
+    max-width: 12ch;
+  }
+}
