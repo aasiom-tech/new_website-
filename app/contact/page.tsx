@@ -176,26 +176,28 @@ export default function ContactPage() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   
-                  {/* Category Pills */}
-                  <div>
-                    <label className="block text-xs font-semibold text-[#0d2b45] mb-2.5">
+                  {/* Inquiry Category Custom Styled Select */}
+                  <div className="pt-2">
+                    <label className="block text-xs font-semibold text-[#0d2b45] mb-2">
                       Inquiry Category *
                     </label>
-                    <div className="flex flex-wrap gap-2.5">
-                      {categories.map((cat) => (
-                        <button
-                          key={cat.id}
-                          type="button"
-                          onClick={() => setFormData({ ...formData, category: cat.id })}
-                          className={`rounded-xl px-4 py-2.5 text-xs font-semibold transition-all duration-200 border text-left cursor-pointer ${
-                            formData.category === cat.id
-                              ? "bg-[#21b0a6] border-[#21b0a6] text-white shadow-xs"
-                              : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100 hover:border-slate-300"
-                          }`}
-                        >
-                          {cat.label}
-                        </button>
-                      ))}
+                    <div className="relative">
+                      <select
+                        value={formData.category}
+                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                        className="w-full appearance-none rounded-xl border border-slate-300 bg-white px-4 py-3.5 pr-10 text-base sm:text-sm text-[#0d2b45] outline-none focus:border-[#21b0a6] focus:ring-2 focus:ring-[#21b0a6]/20 transition-all cursor-pointer"
+                      >
+                        <option value="pilot_fleet">Pilot Fleet Deployment (ANVIRA)</option>
+                        <option value="domain_advisory">Domain Advisory &amp; Partnerships</option>
+                        <option value="tech_integration">Technology &amp; API Integration</option>
+                        <option value="strategic_investor">Strategic Capital &amp; Growth</option>
+                        <option value="general_inquiry">General Operational Inquiry</option>
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
 
