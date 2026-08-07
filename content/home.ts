@@ -202,7 +202,7 @@ export const homeContent = {
     trustLine: "Client-focused. End-to-end. Built for practical use.",
     ctas: [
       { label: "Start a Project", href: "/contact" },
-      { label: "Explore Services", href: "#capabilities" },
+      { label: "Explore Services", href: "/#capabilities" },
     ] as const satisfies readonly CTAContent[],
   },
   proofStrip: {
@@ -272,7 +272,7 @@ export const homeContent = {
       "Tell AASIOM what you are trying to improve, build, or replace. We can help turn the requirement into a clear digital solution and practical delivery plan.",
     ctas: [
       { label: "Start a Project", href: "/contact" },
-      { label: "Explore Services", href: "#capabilities" },
+      { label: "Explore Services", href: "/#capabilities" },
     ] as const satisfies readonly CTAContent[],
   },
 } as const;

@@ -21,7 +21,7 @@ export type RoutableContent = {
 
 export type LinkItem = {
   readonly label: string;
-  readonly href: SiteRoute;
+  readonly href: SiteRoute | `/#${string}`;
 };
 
 export type CTAContent = LinkItem;
