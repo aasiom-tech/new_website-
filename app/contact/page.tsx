@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 
 const fadeInUp: Variants = {
@@ -23,15 +24,19 @@ const staggerContainer: Variants = {
   },
 };
 
-export default function ContactPage() {
+function ContactFormContent() {
+  const searchParams = useSearchParams();
+  const initialType = searchParams.get("type") || "website";
+
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     company: "",
-    projectType: "website",
+    projectType: initialType,
     projectStage: "idea",
+    currentBottleneck: "communication_silos",
     timeline: "1_month",
     description: "",
     referenceUrl: "",
@@ -46,17 +51,31 @@ export default function ContactPage() {
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    const typeParam = searchParams.get("type");
+    if (typeParam) {
+      setFormData((prev) => ({ ...prev, projectType: typeParam }));
+    }
+  }, [searchParams]);
+
+  const isStrategic = formData.projectType === "strategic_review" || formData.projectType === "anvira_pilot";
+
   const validateStep = (step: number): boolean => {
     const newErrors: { [key: string]: string } = {};
 
     if (step === 1) {
-      if (!formData.projectType) newErrors.projectType = "Please select a project type.";
+      if (!formData.projectType) newErrors.projectType = "Please select an inquiry type.";
       if (!formData.projectStage) newErrors.projectStage = "Please select your current project stage.";
+      if (isStrategic && !formData.currentBottleneck) {
+        newErrors.currentBottleneck = "Please select your primary operational focus area.";
+      }
     }
 
     if (step === 2) {
       if (!formData.description.trim()) {
-        newErrors.description = "Project brief is required before proceeding to contact details.";
+        newErrors.description = isStrategic
+          ? "Operational brief is required before proceeding to contact details."
+          : "Project brief is required before proceeding to contact details.";
         setTimeout(() => descriptionRef.current?.focus(), 100);
       }
     }
@@ -107,15 +126,23 @@ export default function ContactPage() {
     { value: "ai_automation", label: "AI & Workflow Automation" },
     { value: "ui_ux_design", label: "UI/UX & Product Design" },
     { value: "maintenance", label: "Maintenance / Existing System" },
+    { value: "strategic_review", label: "Strategic Technical & Architecture Review" },
+    { value: "anvira_pilot", label: "ANVIRA Fleet Pilot Partnership" },
     { value: "partnership", label: "Partnership / Strategic Inquiry" },
-    { value: "anvira_inquiry", label: "ANVIRA / Product Inquiry" },
   ];
 
   const projectStages = [
-    { value: "idea", label: "Early Idea / Concept" },
-    { value: "requirements_ready", label: "Requirements / Brief Ready" },
+    { value: "idea", label: "Early Idea / Concept Phase" },
+    { value: "requirements_ready", label: "Requirements / Scope Brief Ready" },
     { value: "design_ready", label: "UI/UX Design Ready" },
-    { value: "existing_system", label: "Existing System (Needs Upgrade)" },
+    { value: "existing_system", label: "Existing System (Needs Upgrade / Audit)" },
+  ];
+
+  const bottlenecks = [
+    { value: "communication_silos", label: "Fragmented Driver / Dispatcher Communication" },
+    { value: "incident_delay", label: "Delayed Escalation during Fleet Incidents" },
+    { value: "legacy_stack", label: "Outdated Tech Stack / Manual Workflows" },
+    { value: "data_visibility", label: "Lack of Real-time Fleet Operational Telemetry" },
   ];
 
   const timelines = [
@@ -127,7 +154,7 @@ export default function ContactPage() {
 
   const faqs = [
     {
-      question: "What happens after I submit my project requirement?",
+      question: "What happens after I submit my project or review requirement?",
       answer:
         "Our engineering team reviews your brief within 24–48 business hours. We will follow up to clarify scope, propose a technical approach, and provide a milestone roadmap.",
     },
@@ -137,6 +164,11 @@ export default function ContactPage() {
         "Yes. We support fixed-scope builds for well-defined projects, milestone-based phases for larger applications, and monthly capacity support for ongoing product maintenance.",
     },
     {
+      question: "How do Strategic Reviews and ANVIRA Fleet Pilot requests work?",
+      answer:
+        "When selecting a Strategic Review or ANVIRA Pilot inquiry, our senior technical leads perform an initial architectural and operational feasibility audit prior to our scoping call.",
+    },
+    {
       question: "Can AASIOM help if my requirements aren't fully defined yet?",
       answer:
         "Absolutely. We run Product Discovery and Technical Planning sessions to help you define user flows, select the right tech stack, and freeze requirements before development starts.",
@@ -144,12 +176,7 @@ export default function ContactPage() {
     {
       question: "How do you handle IP rights and confidentiality?",
       answer:
-        "All client projects are bound by strict non-disclosure and intellectual property agreements. You retain full ownership of your product source code, designs, and data.",
-    },
-    {
-      question: "Are you accepting inquiries regarding the ANVIRA product initiative?",
-      answer:
-        "Yes. While AASIOM prioritizes client technology services, inquiries regarding ANVIRA fleet pilot partnerships, telematics integrations, or strategic investments can be submitted using the ANVIRA category.",
+        "All client projects and strategic audits are bound by strict non-disclosure and intellectual property agreements. You retain full ownership of your product source code, designs, and data.",
     },
   ];
 
@@ -174,13 +201,13 @@ export default function ContactPage() {
         >
           <div className="inline-flex items-center gap-2 rounded-full border border-[#21b0a6]/30 bg-[#21b0a6]/5 px-3.5 py-1.5 text-[11px] sm:text-xs font-bold tracking-wider text-[#21b0a6] uppercase mb-6">
             <span className="h-2 w-2 rounded-full bg-[#21b0a6] animate-pulse" />
-            Client Project Inquiries
+            Client &amp; Strategic Inquiries
           </div>
           <h1 className="max-w-4xl text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.15] tracking-tight text-[#0d2b45] text-balance">
             Tell us what you want to build.
           </h1>
           <p className="mt-5 max-w-3xl text-sm sm:text-base lg:text-lg leading-relaxed text-slate-600 text-pretty">
-            Share your business problem, idea, existing workflow, or current website/application. We will review your requirement and identify the most practical next step.
+            Share your business problem, product idea, system architecture, or fleet pilot goals. We will review your requirement and deliver a clear technical path forward.
           </p>
         </motion.div>
       </section>
@@ -200,12 +227,12 @@ export default function ContactPage() {
             >
               <div className="mb-6">
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0d2b45] tracking-tight">
-                  Submit Project Requirement
+                  {isStrategic ? "Request Strategic Technical Review" : "Submit Project Requirement"}
                 </h2>
                 <p className="text-xs sm:text-sm font-semibold text-[#21b0a6] mt-1.5">
-                  {currentStep === 1 && "What are we building for you?"}
-                  {currentStep === 2 && "Tell us a bit about your goals and brief."}
-                  {currentStep === 3 && "Where should we send your technical proposal?"}
+                  {currentStep === 1 && (isStrategic ? "Select your strategic audit track and focus area." : "What are we building for you?")}
+                  {currentStep === 2 && (isStrategic ? "Detail your architecture, fleet, or operational goals." : "Tell us a bit about your goals and brief.")}
+                  {currentStep === 3 && "Where should we send your technical evaluation?"}
                 </p>
               </div>
 
@@ -292,7 +319,7 @@ export default function ContactPage() {
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold text-[#0d2b45]">Requirement Received</h3>
                   <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-md mx-auto">
-                    Thank you for reaching out to AASIOM Technologies. Our development team will review your requirement and follow up via email shortly.
+                    Thank you for reaching out to AASIOM Technologies. Our technical team will review your submission and follow up via email shortly.
                   </p>
                 </div>
               ) : (
@@ -302,9 +329,10 @@ export default function ContactPage() {
                   {currentStep === 1 && (
                     <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
                       
+                      {/* Project / Engagement Type Dropdown */}
                       <div>
                         <label className="block text-xs font-bold text-[#0d2b45] mb-2">
-                          Project Type *
+                          Inquiry / Project Type *
                         </label>
                         <div className="relative">
                           <select
@@ -341,10 +369,53 @@ export default function ContactPage() {
                         )}
                       </div>
 
+                      {/* Strategic Bottleneck Dropdown (Shows when Strategic Review/Pilot selected) */}
+                      {isStrategic && (
+                        <div>
+                          <label className="block text-xs font-bold text-[#0d2b45] mb-2">
+                            Primary Bottleneck / Operational Focus *
+                          </label>
+                          <div className="relative">
+                            <select
+                              value={formData.currentBottleneck}
+                              onChange={(e) => {
+                                setFormData({ ...formData, currentBottleneck: e.target.value });
+                                if (errors.currentBottleneck) setErrors({ ...errors, currentBottleneck: "" });
+                              }}
+                              className={`w-full appearance-none rounded-xl border px-4 py-3.5 pr-10 text-xs sm:text-sm font-medium text-[#0d2b45] outline-none transition-all duration-200 cursor-pointer ${
+                                errors.currentBottleneck
+                                  ? "border-rose-400 bg-rose-50/30 focus:ring-4 focus:ring-rose-500/10"
+                                  : "border-slate-300 bg-white focus:border-[#21b0a6] focus:ring-4 focus:ring-[#21b0a6]/15"
+                              }`}
+                            >
+                              {bottlenecks.map((bn) => (
+                                <option key={bn.value} value={bn.value}>
+                                  {bn.label}
+                                </option>
+                              ))}
+                            </select>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                              </svg>
+                            </div>
+                          </div>
+                          {errors.currentBottleneck && (
+                            <p className="mt-1.5 flex items-center gap-1 text-[11px] font-semibold text-rose-600">
+                              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              {errors.currentBottleneck}
+                            </p>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Stage and Timeline */}
                       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                         <div>
                           <label className="block text-xs font-bold text-[#0d2b45] mb-2">
-                            Project Stage *
+                            Current Stage *
                           </label>
                           <div className="relative">
                             <select
@@ -419,19 +490,20 @@ export default function ContactPage() {
                           }}
                           className="text-xs sm:text-sm font-bold shadow-xs hover:bg-[#1ca096] transition-all cursor-pointer border-0"
                         >
-                          Continue to Project Brief &rarr;
+                          Continue to Brief &rarr;
                         </button>
                       </div>
                     </motion.div>
                   )}
 
-                  {/* STEP 2: PROJECT DETAILS */}
+                  {/* STEP 2: PROJECT / REVIEW DETAILS */}
                   {currentStep === 2 && (
                     <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+                      
                       <div>
                         <div className="flex items-center justify-between mb-2">
                           <label className="block text-xs font-bold text-[#0d2b45]">
-                            Project Brief / Problem Description *
+                            {isStrategic ? "Operational Brief & Architecture Goals *" : "Project Brief / Problem Description *"}
                           </label>
                           <span className={`text-[11px] font-medium ${formData.description.length > 500 ? "text-amber-600 font-bold" : "text-slate-400"}`}>
                             {formData.description.length} / 500 characters
@@ -445,7 +517,11 @@ export default function ContactPage() {
                             setFormData({ ...formData, description: e.target.value });
                             if (errors.description) setErrors({ ...errors, description: "" });
                           }}
-                          placeholder="What is the problem, who will use the solution, and what key outcomes do you want to achieve?"
+                          placeholder={
+                            isStrategic
+                              ? "Describe your current tech stack, fleet operational scale, critical security requirements, or pilot goals..."
+                              : "What is the problem, who will use the solution, and what key outcomes do you want to achieve?"
+                          }
                           className={`w-full rounded-xl border px-4 py-3.5 text-xs sm:text-sm text-[#0d2b45] outline-none transition-all duration-200 resize-none ${
                             errors.description
                               ? "border-rose-400 bg-rose-50/30 focus:ring-4 focus:ring-rose-500/10"
@@ -464,13 +540,13 @@ export default function ContactPage() {
 
                       <div>
                         <label className="block text-xs font-bold text-[#0d2b45] mb-2">
-                          Reference Link / Existing Website <span className="text-slate-400 font-normal">(Optional)</span>
+                          Reference Link / Blueprint <span className="text-slate-400 font-normal">(Optional)</span>
                         </label>
                         <input
                           type="url"
                           value={formData.referenceUrl}
                           onChange={(e) => setFormData({ ...formData, referenceUrl: e.target.value })}
-                          placeholder="https://example.com or Figma/Document link"
+                          placeholder="https://example.com, Figma, or Document link"
                           className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-xs sm:text-sm text-[#0d2b45] outline-none focus:border-[#21b0a6] focus:ring-4 focus:ring-[#21b0a6]/15 transition-all duration-200"
                         />
                       </div>
@@ -536,7 +612,7 @@ export default function ContactPage() {
 
                         <div>
                           <label className="block text-xs font-bold text-[#0d2b45] mb-2">
-                            Email Address *
+                            Corporate Email *
                           </label>
                           <input
                             ref={emailRef}
@@ -607,7 +683,7 @@ export default function ContactPage() {
                             }`}
                           />
                           <label htmlFor="consent" className="text-xs text-slate-600 leading-normal">
-                            I agree to allow AASIOM Technologies Private Limited to process these project details in accordance with our{" "}
+                            I agree to allow AASIOM Technologies Private Limited to process these details in accordance with our{" "}
                             <Link href="/privacy-policy" className="text-[#21b0a6] font-semibold underline hover:text-[#1ca096]">
                               Privacy Policy
                             </Link>.
@@ -642,7 +718,7 @@ export default function ContactPage() {
                           }}
                           className="text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all hover:bg-[#1ca096] focus:ring-4 focus:ring-[#21b0a6]/20 focus:outline-none cursor-pointer border-0"
                         >
-                          Send Project Requirement &rarr;
+                          {isStrategic ? "Submit Review Request &rarr;" : "Send Project Requirement &rarr;"}
                         </button>
                       </div>
                     </motion.div>
@@ -723,7 +799,7 @@ export default function ContactPage() {
                   </h4>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  We review every project brief thoroughly before scheduling an initial technical call. You will receive a clear project scope, timeline estimate, and milestone proposal.
+                  We review every submission thoroughly before scheduling an initial technical call. You will receive a clear project scope, timeline estimate, and milestone proposal.
                 </p>
               </div>
             </motion.div>
@@ -732,7 +808,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Clean & Spacious Borderless Accordion FAQ Section */}
+      {/* FAQ Section */}
       <section className="py-16 sm:py-24 bg-[#f8fafc]">
         <div className="mx-auto max-w-4xl px-5 sm:px-8 lg:px-12">
           <motion.div
@@ -799,5 +875,13 @@ export default function ContactPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+export default function ContactPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#f8fafc] py-24 text-center text-slate-500 text-sm">Loading form...</div>}>
+      <ContactFormContent />
+    </Suspense>
   );
 }
