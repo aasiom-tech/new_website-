@@ -18,7 +18,7 @@ export type NavigationGroup = {
 export const primaryNavigation = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Capabilities", href: "/#capabilities" },
+  { label: "Services", href: "/services", includeChildren: true },
   {
     label: "Product",
     href: "/product",
@@ -43,9 +43,9 @@ export const footerNavigation = [
     ],
   },
   {
-    title: "Capabilities",
+    title: "Services",
     links: [
-      { label: "Capability Areas", href: "/#capabilities" },
+      { label: "Services", href: "/services" },
       { label: "Product", href: "/product" },
       ...products.map((product) => ({
         label: product.name,

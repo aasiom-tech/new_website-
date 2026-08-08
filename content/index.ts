@@ -1,3 +1,4 @@
+import { servicesContent } from "@/content/services";
 import { aboutContent } from "@/content/about";
 import { contactContent } from "@/content/contact";
 import { homeContent } from "@/content/home";
@@ -11,6 +12,7 @@ import type { RoutableContent, SiteRoute } from "@/types/content";
 export const contentByRoute = {
   "/": homeContent,
   "/about": aboutContent,
+  "/services": servicesContent,
   "/product": productContent,
   "/product/anvira": anviraProduct,
   "/strategic-review": strategicReviewContent,

@@ -1,7 +1,8 @@
 export type SiteRoute =
   | "/"
   | "/about"
-  | "/product"
+  
+  | "/services"| "/product"
   | "/product/anvira"
   | "/strategic-review"
   | "/contact"
