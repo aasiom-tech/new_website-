@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
-import { motion, Variants } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 
-// Framer Motion variants with explicit const assertions for easing
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 16 },
   visible: { 
@@ -25,436 +24,910 @@ const staggerContainer: Variants = {
 };
 
 export default function StrategicReviewPage() {
+  const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
-    organization: "",
-    role: "",
-    workEmail: "",
-    interestType: "pilot_fleet",
-    message: "",
+    email: "",
+    phone: "",
+    company: "",
+    engagementType: "pilot_partnership",
+    currentBottleneck: "communication_silos",
+    targetTimeline: "1_month",
+    description: "",
+    referenceUrl: "",
     consent: false,
   });
 
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [submitted, setSubmitted] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  const validateStep = (step: number): boolean => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (step === 1) {
+      if (!formData.engagementType) newErrors.engagementType = "Please select an engagement track.";
+      if (!formData.currentBottleneck) newErrors.currentBottleneck = "Please select your primary operational focus.";
+    }
+
+    if (step === 2) {
+      if (!formData.description.trim()) {
+        newErrors.description = "Operational brief is required before proceeding to contact details.";
+        setTimeout(() => descriptionRef.current?.focus(), 100);
+      }
+    }
+
+    if (step === 3) {
+      if (!formData.name.trim()) {
+        newErrors.name = "Full name is required.";
+        setTimeout(() => nameRef.current?.focus(), 100);
+      }
+      if (!formData.email.trim()) {
+        newErrors.email = "Email address is required.";
+        if (!newErrors.name) setTimeout(() => emailRef.current?.focus(), 100);
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+        newErrors.email = "Please enter a valid email address.";
+        if (!newErrors.name) setTimeout(() => emailRef.current?.focus(), 100);
+      }
+      if (!formData.consent) {
+        newErrors.consent = "Please accept the privacy policy to submit your inquiry.";
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const nextStep = () => {
+    if (validateStep(currentStep)) {
+      setErrors({});
+      setCurrentStep((prev) => Math.min(prev + 1, 3));
+    }
+  };
+
+  const prevStep = () => {
+    setErrors({});
+    setCurrentStep((prev) => Math.max(prev - 1, 1));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.consent) return;
+    if (!validateStep(3)) return;
     setSubmitted(true);
   };
 
-  const engagementModels = [
+  const engagementTypes = [
+    { value: "pilot_partnership", label: "ANVIRA Fleet Pilot Partnership" },
+    { value: "strategic_investment", label: "Strategic Investment / Capital Alignment" },
+    { value: "technical_audit", label: "System Architecture & Security Audit" },
+    { value: "telematics_integration", label: "Telematics & IoT Hardware Integration" },
+    { value: "custom_enterprise_build", label: "Enterprise Software & Workflow Automation" },
+  ];
+
+  const bottlenecks = [
+    { value: "communication_silos", label: "Fragmented Driver / Dispatcher Communication" },
+    { value: "incident_delay", label: "Delayed Escalation during Fleet Incidents" },
+    { value: "legacy_stack", label: "Outdated Tech Stack / Manual Workflows" },
+    { value: "data_visibility", label: "Lack of Real-time Fleet Operational Telemetry" },
+  ];
+
+  const timelines = [
+    { value: "urgent", label: "Immediate (< 1 month)" },
+    { value: "1_month", label: "1–2 months" },
+    { value: "3_months", label: "Quarterly Planning (2–3 months)" },
+    { value: "flexible", label: "Strategic Exploration" },
+  ];
+
+  const evaluationPillars = [
     {
-      title: "Pilot Fleet Partners",
-      tag: "Operations & Logistics",
-      description:
-        "Commercial transport and logistics operators seeking structured, AI-assisted incident command and documentation workflows to reduce fleet downtime.",
+      title: "Architecture & Infrastructure",
+      desc: "Audit of system scalability, database schema resilience, cloud hosting protocols, and API endpoint throughput.",
       icon: (
-        <svg className="h-5 w-5 text-[#21b0a6]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+        <svg className="h-6 w-6 text-[#21b0a6]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
         </svg>
       ),
     },
     {
-      title: "Domain Advisors",
-      tag: "Industry Expertise",
-      description:
-        "Senior leaders across supply chain management, fleet safety compliance, enterprise SaaS scaling, and regulatory frameworks in logistics.",
+      title: "Human-Confirmed AI Workflows",
+      desc: "Evaluation of autonomous telemetry agents, incident triage pipelines, and human-in-the-loop validation safety bounds.",
       icon: (
-        <svg className="h-5 w-5 text-[#21b0a6]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        <svg className="h-6 w-6 text-[#21b0a6]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h6l-.75-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
       ),
     },
     {
-      title: "Technology & Systems",
-      tag: "Integrations & Ecosystems",
-      description:
-        "Platforms offering IoT telemetry, telematics hardware, enterprise ERP systems, and secure cloud communication infrastructure.",
+      title: "ANVIRA Fleet Incident Readiness",
+      desc: "Operational assessment for deploying WhatsApp-first incident command workflows across commercial transport fleets.",
       icon: (
-        <svg className="h-5 w-5 text-[#21b0a6]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M11 4a2 2 0 114 0v1a2 2 0 01-4 0V4zm-6 8a2 2 0 114 0v1a2 2 0 01-4 0v-1zm12 0a2 2 0 114 0v1a2 2 0 01-4 0v-1zM4 19a2 2 0 114 0v1a2 2 0 01-4 0v-1zm12 0a2 2 0 114 0v1a2 2 0 01-4 0v-1z" />
+        <svg className="h-6 w-6 text-[#21b0a6]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
         </svg>
       ),
     },
     {
-      title: "Strategic Investors",
-      tag: "Growth & Capital",
-      description:
-        "Institutional and angel investors aligned with specification-led product development, human-governed AI, and scalable B2B systems.",
+      title: "Security & Governance Protocols",
+      desc: "Comprehensive review of IP protection, data encryption standards, and non-disclosure compliance frameworks.",
       icon: (
-        <svg className="h-5 w-5 text-[#21b0a6]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        <svg className="h-6 w-6 text-[#21b0a6]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
         </svg>
       ),
     },
   ];
 
-  const pillars = [
+  const reviewProcess = [
     {
-      number: "01",
-      title: "Specification-Led Engineering",
-      detail: "Every product workflow is thoroughly specified to ground-level operational realities before writing production code.",
+      step: "01",
+      title: "Technical Ingestion & NDA",
+      desc: "Formalizing non-disclosure agreements, establishing secure communication lines, and reviewing current system blueprints or operational briefs.",
     },
     {
-      number: "02",
-      title: "Human-Confirmed AI",
-      detail: "AI assists with synthesis, extraction, and gap detection, while critical operational decisions remain human-verifiable.",
+      step: "02",
+      title: "Architecture & Bottleneck Audit",
+      desc: "Deep-dive analysis into data schemas, dispatch workflows, driver escalation channels, or API integration bottlenecks.",
     },
     {
-      number: "03",
-      title: "Phased Governance",
-      detail: "Milestones are structured into architected specifications, core backend validation, controlled pilots, and enterprise scale.",
+      step: "03",
+      title: "Roadmap & Pilot Blueprinting",
+      desc: "Defining phased milestones, engineering resource allocations, risk mitigation protocols, and pilot deployment parameters.",
+    },
+    {
+      step: "04",
+      title: "Executive Sign-Off & Alignment",
+      desc: "Presenting the final Strategic Review Report, architecture recommendations, and operational deployment schedule.",
     },
   ];
 
-  const anviraCapabilities = [
-    "WhatsApp-First Communication Interface",
-    "Automated Evidence & Dossier Assembly",
-    "Human-Confirmed Severity Classification",
-    "Downtime & Blocker Tracking Workflows",
+  const faqs = [
+    {
+      question: "What is the primary objective of an AASIOM Strategic Review?",
+      answer:
+        "The Strategic Review establishes a technical audit, evaluates architectural feasibility, and defines a milestone-based deployment roadmap before engineering capacity is committed.",
+    },
+    {
+      question: "How does the ANVIRA Pilot Fleet Partnership evaluation work?",
+      answer:
+        "For fleet operators, we assess current dispatcher-driver communication channels, evaluate WhatsApp-first incident command workflows, and structure a controlled pilot deployment.",
+    },
+    {
+      question: "What deliverables are provided upon review completion?",
+      answer:
+        "You receive a comprehensive System Architecture Blueprint, Milestone Development Schedule, Technology Stack Decision Matrix, and an IP & Security Compliance Brief.",
+    },
+    {
+      question: "How are intellectual property rights and data security handled?",
+      answer:
+        "All discussions and strategic audits are protected under strict Non-Disclosure Agreements (NDAs). Clients retain 100% ownership of their proprietary code, operational data, and assets.",
+    },
+    {
+      question: "Can strategic review engagements transition directly into product development?",
+      answer:
+        "Yes. Once the architectural review and specification phase is complete, engineering timelines and dedicated developer capacity can be scheduled immediately.",
+    },
+  ];
+
+  const stepLabels = [
+    { num: 1, title: "Alignment" },
+    { num: 2, title: "Context" },
+    { num: 3, title: "Review" },
   ];
 
   return (
     <main id="main-content" className="min-h-screen bg-[#f8fafc] text-[#0d2b45] antialiased selection:bg-[#21b0a6]/20 selection:text-[#0d2b45]">
       
       {/* Hero Header */}
-      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white py-12 sm:py-20 md:py-28">
-        <div className="absolute inset-0 bg-[radial-gradient(#21b0a6_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03]" />
+      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white py-16 sm:py-20 lg:py-24">
+        <div className="absolute inset-0 bg-[radial-gradient(#21b0a6_1px,transparent_1px)] [background-size:26px_26px] opacity-[0.04]" />
         
         <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
-          className="relative mx-auto max-w-6xl px-4 sm:px-6"
+          className="relative mx-auto max-w-6xl px-5 sm:px-8 lg:px-12"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#21b0a6]/25 bg-[#21b0a6]/5 px-3 py-1 text-[11px] sm:text-xs font-bold tracking-wider text-[#21b0a6] uppercase mb-4 sm:mb-8 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#21b0a6]/30 bg-[#21b0a6]/5 px-3.5 py-1.5 text-[11px] sm:text-xs font-bold tracking-wider text-[#21b0a6] uppercase mb-6">
             <span className="h-2 w-2 rounded-full bg-[#21b0a6] animate-pulse" />
-            Strategic Review &amp; Partnerships
+            Technical Architecture &amp; Strategy
           </div>
-          <h1 className="max-w-4xl text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.18] tracking-tight text-[#0d2b45]">
-            Build, Partner or Invest in the Next Stage of AASIOM.
+          <h1 className="max-w-4xl text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.15] tracking-tight text-[#0d2b45] text-balance">
+            Strategic Review &amp; Architecture Audit.
           </h1>
-          <p className="mt-4 sm:mt-6 max-w-3xl text-xs sm:text-base md:text-lg leading-relaxed text-slate-600">
-            AASIOM Technologies Private Limited is an AI-first technology and product company engineering focused digital systems for complex operational environments. We collaborate with select fleet operators, industry advisors, technology partners, and strategic investors.
+          <p className="mt-5 max-w-3xl text-sm sm:text-base lg:text-lg leading-relaxed text-slate-600 text-pretty">
+            Align your enterprise technical strategy, evaluate ANVIRA fleet pilot readiness, or audit system infrastructure with AASIOM&apos;s core engineering team.
           </p>
         </motion.div>
       </section>
 
-      {/* Strategic Direction & Framework */}
-      <section className="border-b border-slate-200/80 bg-[#f8fafc] py-12 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      {/* Evaluation Pillars Grid */}
+      <section className="py-16 border-b border-slate-200/80 bg-white/60">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
+          <div className="mb-10 text-center sm:text-left">
+            <p className="text-xs font-bold tracking-widest text-[#21b0a6] uppercase mb-2">
+              Evaluation Framework
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0d2b45]">
+              Core Review Domains
+            </h2>
+          </div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-30px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          >
+            {evaluationPillars.map((pillar, idx) => (
+              <motion.div
+                key={idx}
+                variants={fadeInUp}
+                className="rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs hover:border-[#21b0a6]/40 transition-all duration-300"
+              >
+                <div className="mb-4 inline-block rounded-xl bg-[#21b0a6]/10 p-3">
+                  {pillar.icon}
+                </div>
+                <h3 className="text-base font-bold text-[#0d2b45] mb-2">
+                  {pillar.title}
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  {pillar.desc}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 4-Step Review Process Workflow */}
+      <section className="py-16 border-b border-slate-200/80 bg-[#f8fafc]">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
+          <div className="mb-12 text-center sm:text-left">
+            <p className="text-xs font-bold tracking-widest text-[#21b0a6] uppercase mb-2">
+              Structured Methodology
+            </p>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#0d2b45]">
+              The Review Process
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {reviewProcess.map((proc, idx) => (
+              <div key={idx} className="rounded-2xl border border-slate-200/90 bg-white p-7 shadow-xs">
+                <span className="text-2xl font-black text-[#21b0a6]/40 block mb-3">
+                  {proc.step}
+                </span>
+                <h3 className="text-base font-bold text-[#0d2b45] mb-2">
+                  {proc.title}
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  {proc.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Main Intake Form & Corporate Credentials */}
+      <section className="py-12 sm:py-20 border-b border-slate-200/80">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12 items-start">
+            
+            {/* Left Column: Multi-Step Review Form */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-40px" }}
+              variants={fadeInUp}
+              className="lg:col-span-7 rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-10 shadow-xs"
+            >
+              {/* Form Header */}
+              <div className="mb-6">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0d2b45] tracking-tight">
+                  Request Strategic Review
+                </h2>
+                <p className="text-xs sm:text-sm font-semibold text-[#21b0a6] mt-1.5">
+                  {currentStep === 1 && "Select your engagement track and focus area."}
+                  {currentStep === 2 && "Detail your current architecture or operational goals."}
+                  {currentStep === 3 && "Where should we deliver the preliminary evaluation?"}
+                </p>
+              </div>
+
+              {/* Stepper Bar */}
+              {!submitted && (
+                <div className="mb-8 border-b border-slate-100 pb-8 pt-2">
+                  <div className="flex items-center justify-between">
+                    {stepLabels.map((s, idx) => {
+                      const isDone = currentStep > s.num;
+                      const isCurrent = currentStep === s.num;
+
+                      return (
+                        <React.Fragment key={s.num}>
+                          <div className="flex flex-col items-center">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (s.num < currentStep) {
+                                  setErrors({});
+                                  setCurrentStep(s.num);
+                                }
+                              }}
+                              className={`flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
+                                isDone
+                                  ? "bg-[#21b0a6] text-white shadow-xs"
+                                  : isCurrent
+                                  ? "bg-[#0d2b45] text-white ring-4 ring-[#21b0a6]/20 shadow-xs"
+                                  : "bg-slate-100 text-slate-400 border border-slate-200"
+                              }`}
+                            >
+                              {isDone ? (
+                                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                              ) : (
+                                s.num
+                              )}
+                            </button>
+                            <span
+                              className={`mt-2 text-[11px] font-bold tracking-tight ${
+                                isCurrent || isDone ? "text-[#0d2b45]" : "text-slate-400"
+                              }`}
+                            >
+                              {s.title}
+                            </span>
+                          </div>
+
+                          {idx < stepLabels.length - 1 && (
+                            <div
+                              className={`h-[2px] flex-1 mx-3 sm:mx-6 transition-colors duration-300 ${
+                                currentStep > s.num ? "bg-[#21b0a6]" : "bg-slate-200"
+                              }`}
+                            />
+                          )}
+                        </React.Fragment>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Alert Banner for Errors */}
+              {Object.keys(errors).length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-6 flex items-center gap-3 rounded-xl bg-rose-50 border border-rose-200/80 px-4 py-3 text-xs text-rose-900"
+                >
+                  <svg className="h-4 w-4 text-rose-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <p className="font-semibold leading-tight">
+                    Please fix the highlighted fields below to continue.
+                  </p>
+                </motion.div>
+              )}
+
+              {submitted ? (
+                <div className="rounded-2xl border border-[#21b0a6]/30 bg-[#21b0a6]/10 p-8 sm:p-10 text-center">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#21b0a6]/20 text-[#21b0a6]">
+                    <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-[#0d2b45]">Strategic Review Request Received</h3>
+                  <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-md mx-auto">
+                    Thank you for reaching out to AASIOM Technologies. Our engineering lead will review your request and reach out within 24–48 hours to confirm review parameters.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  
+                  {/* STEP 1: ALIGNMENT & TRACK */}
+                  {currentStep === 1 && (
+                    <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+                      
+                      <div>
+                        <label className="block text-xs font-bold text-[#0d2b45] mb-2">
+                          Engagement Track *
+                        </label>
+                        <div className="relative">
+                          <select
+                            value={formData.engagementType}
+                            onChange={(e) => {
+                              setFormData({ ...formData, engagementType: e.target.value });
+                              if (errors.engagementType) setErrors({ ...errors, engagementType: "" });
+                            }}
+                            className={`w-full appearance-none rounded-xl border px-4 py-3.5 pr-10 text-xs sm:text-sm font-medium text-[#0d2b45] outline-none transition-all duration-200 cursor-pointer ${
+                              errors.engagementType
+                                ? "border-rose-400 bg-rose-50/30 focus:ring-4 focus:ring-rose-500/10"
+                                : "border-slate-300 bg-white focus:border-[#21b0a6] focus:ring-4 focus:ring-[#21b0a6]/15"
+                            }`}
+                          >
+                            {engagementTypes.map((et) => (
+                              <option key={et.value} value={et.value}>
+                                {et.label}
+                              </option>
+                            ))}
+                          </select>
+                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </div>
+                        </div>
+                        {errors.engagementType && (
+                          <p className="mt-1.5 flex items-center gap-1 text-[11px] font-semibold text-rose-600">
+                            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            {errors.engagementType}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        <div>
+                          <label className="block text-xs font-bold text-[#0d2b45] mb-2">
+                            Primary Bottleneck / Focus Area *
+                          </label>
+                          <div className="relative">
+                            <select
+                              value={formData.currentBottleneck}
+                              onChange={(e) => {
+                                setFormData({ ...formData, currentBottleneck: e.target.value });
+                                if (errors.currentBottleneck) setErrors({ ...errors, currentBottleneck: "" });
+                              }}
+                              className={`w-full appearance-none rounded-xl border px-4 py-3.5 pr-10 text-xs sm:text-sm font-medium text-[#0d2b45] outline-none transition-all duration-200 cursor-pointer ${
+                                errors.currentBottleneck
+                                  ? "border-rose-400 bg-rose-50/30 focus:ring-4 focus:ring-rose-500/10"
+                                  : "border-slate-300 bg-white focus:border-[#21b0a6] focus:ring-4 focus:ring-[#21b0a6]/15"
+                              }`}
+                            >
+                              {bottlenecks.map((bn) => (
+                                <option key={bn.value} value={bn.value}>
+                                  {bn.label}
+                                </option>
+                              ))}
+                            </select>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                              </svg>
+                            </div>
+                          </div>
+                          {errors.currentBottleneck && (
+                            <p className="mt-1.5 flex items-center gap-1 text-[11px] font-semibold text-rose-600">
+                              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              {errors.currentBottleneck}
+                            </p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-bold text-[#0d2b45] mb-2">
+                            Target Engagement Horizon
+                          </label>
+                          <div className="relative">
+                            <select
+                              value={formData.targetTimeline}
+                              onChange={(e) => setFormData({ ...formData, targetTimeline: e.target.value })}
+                              className="w-full appearance-none rounded-xl border border-slate-300 bg-white px-4 py-3.5 pr-10 text-xs sm:text-sm font-medium text-[#0d2b45] outline-none focus:border-[#21b0a6] focus:ring-4 focus:ring-[#21b0a6]/15 transition-all duration-200 cursor-pointer"
+                            >
+                              {timelines.map((tl) => (
+                                <option key={tl.value} value={tl.value}>
+                                  {tl.label}
+                                </option>
+                              ))}
+                            </select>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="pt-6 border-t border-slate-100 flex justify-end">
+                        <button
+                          type="button"
+                          onClick={nextStep}
+                          style={{ 
+                            backgroundColor: "#21b0a6", 
+                            color: "#ffffff",
+                            padding: "12px 28px",
+                            borderRadius: "10px",
+                            lineHeight: "1.2"
+                          }}
+                          className="text-xs sm:text-sm font-bold shadow-xs hover:bg-[#1ca096] transition-all cursor-pointer border-0"
+                        >
+                          Continue to Context &rarr;
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* STEP 2: CONTEXT & BRIEF */}
+                  {currentStep === 2 && (
+                    <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+                      
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <label className="block text-xs font-bold text-[#0d2b45]">
+                            Operational Context / Review Brief *
+                          </label>
+                          <span className={`text-[11px] font-medium ${formData.description.length > 500 ? "text-amber-600 font-bold" : "text-slate-400"}`}>
+                            {formData.description.length} / 500 characters
+                          </span>
+                        </div>
+                        <textarea
+                          ref={descriptionRef}
+                          rows={5}
+                          value={formData.description}
+                          onChange={(e) => {
+                            setFormData({ ...formData, description: e.target.value });
+                            if (errors.description) setErrors({ ...errors, description: "" });
+                          }}
+                          placeholder="Describe your current tech stack, fleet operational scale, critical security requirements, or pilot goals..."
+                          className={`w-full rounded-xl border px-4 py-3.5 text-xs sm:text-sm text-[#0d2b45] outline-none transition-all duration-200 resize-none ${
+                            errors.description
+                              ? "border-rose-400 bg-rose-50/30 focus:ring-4 focus:ring-rose-500/10"
+                              : "border-slate-300 bg-white focus:border-[#21b0a6] focus:ring-4 focus:ring-[#21b0a6]/15"
+                          }`}
+                        />
+                        {errors.description && (
+                          <p className="mt-1.5 flex items-center gap-1 text-[11px] font-semibold text-rose-600">
+                            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            {errors.description}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-[#0d2b45] mb-2">
+                          Documentation Link / Existing Blueprint <span className="text-slate-400 font-normal">(Optional)</span>
+                        </label>
+                        <input
+                          type="url"
+                          value={formData.referenceUrl}
+                          onChange={(e) => setFormData({ ...formData, referenceUrl: e.target.value })}
+                          placeholder="https://notion.site/blueprint or Architecture document"
+                          className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-xs sm:text-sm text-[#0d2b45] outline-none focus:border-[#21b0a6] focus:ring-4 focus:ring-[#21b0a6]/15 transition-all duration-200"
+                        />
+                      </div>
+
+                      <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
+                        <button
+                          type="button"
+                          onClick={prevStep}
+                          className="rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
+                        >
+                          &larr; Back
+                        </button>
+                        <button
+                          type="button"
+                          onClick={nextStep}
+                          style={{ 
+                            backgroundColor: "#21b0a6", 
+                            color: "#ffffff",
+                            padding: "12px 28px",
+                            borderRadius: "10px",
+                            lineHeight: "1.2"
+                          }}
+                          className="text-xs sm:text-sm font-bold shadow-xs hover:bg-[#1ca096] transition-all cursor-pointer border-0"
+                        >
+                          Continue to Review Details &rarr;
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* STEP 3: CONTACT & SUBMIT */}
+                  {currentStep === 3 && (
+                    <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+                      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        <div>
+                          <label className="block text-xs font-bold text-[#0d2b45] mb-2">
+                            Full Name *
+                          </label>
+                          <input
+                            ref={nameRef}
+                            type="text"
+                            value={formData.name}
+                            onChange={(e) => {
+                              setFormData({ ...formData, name: e.target.value });
+                              if (errors.name) setErrors({ ...errors, name: "" });
+                            }}
+                            placeholder="e.g. Rahul Sharma"
+                            className={`w-full rounded-xl border px-4 py-3.5 text-xs sm:text-sm text-[#0d2b45] outline-none transition-all duration-200 ${
+                              errors.name
+                                ? "border-rose-400 bg-rose-50/30 focus:ring-4 focus:ring-rose-500/10"
+                                : "border-slate-300 bg-white focus:border-[#21b0a6] focus:ring-4 focus:ring-[#21b0a6]/15"
+                            }`}
+                          />
+                          {errors.name && (
+                            <p className="mt-1.5 flex items-center gap-1 text-[11px] font-semibold text-rose-600">
+                              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              {errors.name}
+                            </p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-bold text-[#0d2b45] mb-2">
+                            Corporate Email *
+                          </label>
+                          <input
+                            ref={emailRef}
+                            type="email"
+                            value={formData.email}
+                            onChange={(e) => {
+                              setFormData({ ...formData, email: e.target.value });
+                              if (errors.email) setErrors({ ...errors, email: "" });
+                            }}
+                            placeholder="name@company.com"
+                            className={`w-full rounded-xl border px-4 py-3.5 text-xs sm:text-sm text-[#0d2b45] outline-none transition-all duration-200 ${
+                              errors.email
+                                ? "border-rose-400 bg-rose-50/30 focus:ring-4 focus:ring-rose-500/10"
+                                : "border-slate-300 bg-white focus:border-[#21b0a6] focus:ring-4 focus:ring-[#21b0a6]/15"
+                            }`}
+                          />
+                          {errors.email && (
+                            <p className="mt-1.5 flex items-center gap-1 text-[11px] font-semibold text-rose-600">
+                              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              {errors.email}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        <div>
+                          <label className="block text-xs font-bold text-[#0d2b45] mb-2">
+                            Phone / WhatsApp <span className="text-slate-400 font-normal">(Optional)</span>
+                          </label>
+                          <input
+                            type="tel"
+                            value={formData.phone}
+                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                            placeholder="+91 98765 43210"
+                            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-xs sm:text-sm text-[#0d2b45] outline-none focus:border-[#21b0a6] focus:ring-4 focus:ring-[#21b0a6]/15 transition-all duration-200"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-bold text-[#0d2b45] mb-2">
+                            Company / Entity Name <span className="text-slate-400 font-normal">(Optional)</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={formData.company}
+                            onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                            placeholder="e.g. Acme Logistics"
+                            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-xs sm:text-sm text-[#0d2b45] outline-none focus:border-[#21b0a6] focus:ring-4 focus:ring-[#21b0a6]/15 transition-all duration-200"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="flex items-start gap-3 pt-2">
+                          <input
+                            type="checkbox"
+                            id="consent"
+                            checked={formData.consent}
+                            onChange={(e) => {
+                              setFormData({ ...formData, consent: e.target.checked });
+                              if (errors.consent) setErrors({ ...errors, consent: "" });
+                            }}
+                            className={`mt-0.5 h-4 w-4 shrink-0 rounded text-[#21b0a6] focus:ring-[#21b0a6] ${
+                              errors.consent ? "border-rose-500 ring-2 ring-rose-500/20" : "border-slate-300"
+                            }`}
+                          />
+                          <label htmlFor="consent" className="text-xs text-slate-600 leading-normal">
+                            I agree to allow AASIOM Technologies Private Limited to evaluate these strategic details in accordance with our{" "}
+                            <Link href="/privacy-policy" className="text-[#21b0a6] font-semibold underline hover:text-[#1ca096]">
+                              Privacy Policy
+                            </Link>.
+                          </label>
+                        </div>
+                        {errors.consent && (
+                          <p className="mt-1.5 flex items-center gap-1 text-[11px] font-semibold text-rose-600">
+                            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            {errors.consent}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
+                        <button
+                          type="button"
+                          onClick={prevStep}
+                          className="rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
+                        >
+                          &larr; Back
+                        </button>
+                        <button
+                          type="submit"
+                          style={{ 
+                            backgroundColor: "#21b0a6", 
+                            color: "#ffffff",
+                            padding: "14px 32px",
+                            borderRadius: "12px",
+                            lineHeight: "1.2"
+                          }}
+                          className="text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all hover:bg-[#1ca096] focus:ring-4 focus:ring-[#21b0a6]/20 focus:outline-none cursor-pointer border-0"
+                        >
+                          Submit Strategic Review Request &rarr;
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+
+                </form>
+              )}
+            </motion.div>
+
+            {/* Right Column: Strategic Deliverables & Direct Contacts */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-40px" }}
+              variants={fadeInUp}
+              className="lg:col-span-5 space-y-6"
+            >
+              <div className="rounded-2xl border border-slate-200/90 bg-white p-7 sm:p-8 shadow-xs hover:border-[#21b0a6]/40 transition-all duration-300">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="rounded-xl bg-[#21b0a6]/10 p-2.5 text-[#21b0a6]">
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold tracking-widest text-[#21b0a6] uppercase block">
+                      Direct Channel
+                    </span>
+                    <h3 className="text-base font-bold text-[#0d2b45]">
+                      Corporate Email
+                    </h3>
+                  </div>
+                </div>
+                <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  For formal proposals, NDA requests, or ANVIRA strategic partnerships:
+                </p>
+                <a
+                  href="mailto:contact@aasiom.com"
+                  className="mt-4 inline-flex items-center gap-2 text-sm sm:text-base font-bold text-[#21b0a6] hover:underline"
+                >
+                  contact@aasiom.com
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200/90 bg-white p-7 sm:p-8 shadow-xs hover:border-[#21b0a6]/40 transition-all duration-300">
+                <span className="text-[10px] font-bold tracking-widest text-[#21b0a6] uppercase block mb-1">
+                  Audit Deliverables
+                </span>
+                <h3 className="text-base font-bold text-[#0d2b45] mb-3">
+                  What You Receive
+                </h3>
+                <ul className="space-y-2.5 text-xs text-slate-600">
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#21b0a6] font-bold">✓</span>
+                    <span>System Architecture Blueprint &amp; Schema Audit</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#21b0a6] font-bold">✓</span>
+                    <span>Technology Stack &amp; Infrastructure Cost Matrix</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#21b0a6] font-bold">✓</span>
+                    <span>ANVIRA WhatsApp Integration Feasibility Study</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#21b0a6] font-bold">✓</span>
+                    <span>Phased Engineering &amp; Security Compliance Brief</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="rounded-2xl border border-[#21b0a6]/25 bg-gradient-to-br from-[#21b0a6]/10 to-[#21b0a6]/5 p-7 sm:p-8 backdrop-blur-sm">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#21b0a6] animate-pulse" />
+                  <h4 className="text-xs sm:text-sm font-bold text-[#0d2b45]">
+                    Confidentiality &amp; NDA Protocol
+                  </h4>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Every technical review is bound by strict NDA agreements. All proprietary data, codebase assets, and telemetry specs remain 100% confidential.
+                </p>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 sm:py-24 bg-[#f8fafc]">
+        <div className="mx-auto max-w-4xl px-5 sm:px-8 lg:px-12">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-40px" }}
             variants={fadeInUp}
-            className="mb-10 sm:mb-16 max-w-3xl"
+            className="mb-10 text-center sm:text-left"
           >
             <p className="mb-2 text-xs font-bold tracking-widest text-[#21b0a6] uppercase">
-              Opportunity Overview
+              Frequently Asked Questions
             </p>
-            <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold tracking-tight text-[#0d2b45]">
-              Solving fragmented operational coordination at scale
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#0d2b45]">
+              Strategic Review FAQ
             </h2>
-            <p className="mt-3 sm:mt-4 text-xs sm:text-base md:text-lg leading-relaxed text-slate-600">
-              High-pressure operating environments—starting with logistics and fleet operations—frequently suffer from delayed decisions, unorganized evidence, and untracked downtime. AASIOM transforms chaotic, multi-channel communication into clear, actionable digital workflows.
-            </p>
           </motion.div>
 
-          {/* Development Discipline Pillars */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-30px" }}
             variants={staggerContainer}
-            className="grid grid-cols-1 gap-5 sm:gap-8 md:grid-cols-3 mb-10 sm:mb-16"
+            className="divide-y divide-slate-200 border-t border-b border-slate-200"
           >
-            {pillars.map((item, idx) => (
-              <motion.div
-                key={idx}
-                variants={fadeInUp}
-                className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 hover:border-[#21b0a6]/40 hover:shadow-md"
-              >
-                <div>
-                  <span className="text-xs font-bold text-[#21b0a6] tracking-widest uppercase">
-                    {item.number}
-                  </span>
-                  <h3 className="mt-3 mb-2 text-base sm:text-xl font-bold text-[#0d2b45] leading-snug text-balance">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed text-pretty">
-                    {item.detail}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+            {faqs.map((faq, idx) => {
+              const isOpen = openFaqIndex === idx;
 
-          {/* Collaboration Models Grid */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-30px" }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 gap-5 sm:gap-8 md:grid-cols-2 lg:grid-cols-4"
-          >
-            {engagementModels.map((item, idx) => (
-              <motion.div
-                key={idx}
-                variants={fadeInUp}
-                className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 hover:border-[#21b0a6]/40 hover:shadow-md"
-              >
-                <div>
-                  <div className="mb-5 flex items-center justify-between">
-                    <div className="rounded-xl bg-[#21b0a6]/10 p-2.5">
-                      {item.icon}
-                    </div>
-                    <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                      {item.tag}
-                    </span>
-                  </div>
-                  <h3 className="mb-2 text-base sm:text-xl font-bold text-[#0d2b45] leading-snug text-balance">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm leading-relaxed text-slate-600 text-pretty">
-                    {item.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Flagship Initiative Showcase */}
-      <section className="border-b border-slate-200/80 bg-white py-12 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-40px" }}
-            variants={fadeInUp}
-            className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-slate-50/70 p-6 sm:p-10 md:p-14 shadow-sm"
-          >
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center">
-              
-              {/* Main Content Column */}
-              <div className="lg:col-span-7 space-y-4 sm:space-y-6">
-                <div className="inline-flex items-center gap-2 rounded-full border border-[#21b0a6]/30 bg-[#21b0a6]/10 px-3 py-1 text-[11px] sm:text-xs font-bold tracking-wider text-[#21b0a6] uppercase">
-                  <span className="h-2 w-2 rounded-full bg-[#21b0a6]" />
-                  Flagship Initiative
-                </div>
-                
-                <h2 className="text-xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#0d2b45] leading-snug text-balance">
-                  ANVIRA: WhatsApp-First Incident Command Platform
-                </h2>
-                
-                <p className="text-xs sm:text-base text-slate-600 leading-relaxed text-pretty">
-                  Developed specifically for Indian commercial trucking fleets, ANVIRA consolidates scattered phone calls, chat messages, voice notes, and photos into a structured incident case with human-confirmed severity, evidence tracking, and audited dossier generation.
-                </p>
-
-                {/* Status Badges */}
-                <div className="flex flex-wrap items-center gap-2.5 pt-1 text-xs font-semibold text-[#0d2b45]">
-                  <span className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200/80 shadow-xs">
-                    <span className="h-2 w-2 rounded-full bg-[#21b0a6]" />
-                    Active Development Status
-                  </span>
-                  <span className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200/80 shadow-xs">
-                    <span className="h-2 w-2 rounded-full bg-[#21b0a6]" />
-                    Architected Specifications Complete
-                  </span>
-                </div>
-              </div>
-
-              {/* Clean Capability List */}
-              <div className="lg:col-span-5 border-t border-slate-200/80 pt-6 lg:border-t-0 lg:border-l lg:pl-10 lg:pt-0 space-y-4">
-                <div>
-                  <span className="text-[11px] font-bold tracking-widest text-[#21b0a6] uppercase">
-                    Capabilities Overview
-                  </span>
-                  <h3 className="mt-1 text-base sm:text-lg font-bold text-[#0d2b45]">
-                    Core Platform Features
-                  </h3>
-                </div>
-
-                <div className="space-y-3.5 pt-1">
-                  {anviraCapabilities.map((cap, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#21b0a6]/15 text-[#21b0a6]">
-                        <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-xs sm:text-sm font-semibold text-[#0d2b45] leading-normal">
-                        {cap}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Strategic Review Request Form */}
-      <section className="bg-white py-12 sm:py-20">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-40px" }}
-            variants={fadeInUp}
-            className="rounded-3xl border border-slate-200/90 bg-slate-50/70 p-6 sm:p-12 shadow-sm"
-          >
-            <div className="mb-6 sm:mb-8 text-left">
-              <p className="mb-1.5 text-xs font-bold tracking-widest text-[#21b0a6] uppercase">
-                Confidential Inquiry
-              </p>
-              <h2 className="text-xl sm:text-3xl font-bold text-[#0d2b45]">
-                Request a Strategic Review
-              </h2>
-              <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Qualified inquiries are routed directly to the Founder for discussion. Private progress documentation, product roadmaps, and technical architecture specs are provided following qualification.
-              </p>
-            </div>
-
-            {submitted ? (
-              <div className="rounded-2xl border border-[#21b0a6]/30 bg-[#21b0a6]/10 p-6 text-center">
-                <h3 className="text-base sm:text-lg font-bold text-[#0d2b45]">Inquiry Received</h3>
-                <p className="mt-2 text-xs sm:text-sm text-slate-600">
-                  Thank you for reaching out. The Founder will review your details and respond via work email shortly.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-                <div className="grid grid-cols-1 gap-4 sm:gap-5 sm:grid-cols-2">
-                  <div>
-                    <label className="block text-xs font-semibold text-[#0d2b45] mb-1.5">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="e.g. Rahul Sharma"
-                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base sm:text-sm text-[#0d2b45] outline-none focus:border-[#21b0a6] focus:ring-1 focus:ring-[#21b0a6]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-[#0d2b45] mb-1.5">
-                      Organization / Company *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.organization}
-                      onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-                      placeholder="e.g. Apex Logistics"
-                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base sm:text-sm text-[#0d2b45] outline-none focus:border-[#21b0a6] focus:ring-1 focus:ring-[#21b0a6]"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 gap-4 sm:gap-5 sm:grid-cols-2">
-                  <div>
-                    <label className="block text-xs font-semibold text-[#0d2b45] mb-1.5">
-                      Your Role *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.role}
-                      onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                      placeholder="e.g. Fleet Director / Managing Partner"
-                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base sm:text-sm text-[#0d2b45] outline-none focus:border-[#21b0a6] focus:ring-1 focus:ring-[#21b0a6]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-[#0d2b45] mb-1.5">
-                      Work Email *
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={formData.workEmail}
-                      onChange={(e) => setFormData({ ...formData, workEmail: e.target.value })}
-                      placeholder="name@company.com"
-                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base sm:text-sm text-[#0d2b45] outline-none focus:border-[#21b0a6] focus:ring-1 focus:ring-[#21b0a6]"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-[#0d2b45] mb-1.5">
-                    Primary Area of Interest *
-                  </label>
-                  <select
-                    value={formData.interestType}
-                    onChange={(e) => setFormData({ ...formData, interestType: e.target.value })}
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base sm:text-sm text-[#0d2b45] outline-none focus:border-[#21b0a6] focus:ring-1 focus:ring-[#21b0a6]"
-                  >
-                    <option value="pilot_fleet">ANVIRA Pilot Fleet Deployment</option>
-                    <option value="domain_advisor">Domain Advisory / Industry Expertise</option>
-                    <option value="tech_partner">Technology or Systems Partnership</option>
-                    <option value="strategic_investor">Investment &amp; Growth Conversation</option>
-                    <option value="other">General Strategic Inquiry</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-[#0d2b45] mb-1.5">
-                    Message / Context
-                  </label>
-                  <textarea
-                    rows={4}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Briefly outline your background, operational needs, or discussion objectives..."
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base sm:text-sm text-[#0d2b45] outline-none focus:border-[#21b0a6] focus:ring-1 focus:ring-[#21b0a6]"
-                  />
-                </div>
-
-                <div className="flex items-start gap-2.5 pt-1">
-                  <input
-                    type="checkbox"
-                    id="consent"
-                    required
-                    checked={formData.consent}
-                    onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
-                    className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-[#21b0a6] focus:ring-[#21b0a6]"
-                  />
-                  <label htmlFor="consent" className="text-xs text-slate-600 leading-normal">
-                    I agree to allow AASIOM Technologies Private Limited to store and process these details to respond to this strategic inquiry in accordance with our{" "}
-                    <Link href="/privacy-policy" className="text-[#21b0a6] underline hover:text-[#1ca096]">
-                      Privacy Policy
-                    </Link>.
-                  </label>
-                </div>
-
-                <div className="pt-3">
+              return (
+                <motion.div key={idx} variants={fadeInUp} className="py-2">
                   <button
-                    type="submit"
-                    style={{ 
-                      backgroundColor: "#21b0a6", 
-                      color: "#ffffff",
-                      padding: "14px 32px",
-                      borderRadius: "12px",
-                      lineHeight: "1.2",
-                      display: "inline-block"
-                    }}
-                    className="w-full sm:w-auto text-xs sm:text-sm font-semibold shadow-sm transition-all hover:bg-[#1ca096] focus:ring-2 focus:ring-[#21b0a6] focus:outline-none text-center cursor-pointer border-0"
+                    type="button"
+                    onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                    className="w-full text-left py-4 flex items-center justify-between gap-6 cursor-pointer group"
                   >
-                    Speak with the Founder
+                    <span className="text-base sm:text-lg font-bold text-[#0d2b45] leading-relaxed group-hover:text-[#21b0a6] transition-colors">
+                      {faq.question}
+                    </span>
+                    <div className={`h-8 w-8 rounded-full flex items-center justify-center shrink-0 transition-transform duration-200 ${isOpen ? "bg-[#21b0a6] text-white rotate-180" : "bg-slate-100 text-slate-500"}`}>
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
                   </button>
-                </div>
-              </form>
-            )}
+
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-3xl">
+                          {faq.answer}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </section>
